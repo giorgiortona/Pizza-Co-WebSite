@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+
+  --color-brand-cream: var(--theme-cream);
+  --color-brand-cream-dark: var(--theme-cream-dark);
+  --color-brand-dark: var(--theme-dark);
+  --color-brand-red: var(--theme-red);
+  --color-brand-red-light: var(--theme-red-light);
+  --color-brand-gold: var(--theme-gold);
+  --color-brand-card: var(--theme-card);
+}
+
+@layer base {
+  :root {
+    /* Lunch Mode (Default) Colors */
+    --theme-cream: #faf7f2;
+    --theme-cream-dark: #f0eadd;
+    --theme-dark: #12100e;
+    --theme-red: #8b1818;
+    --theme-red-light: #a32222;
+    --theme-gold: #c2a165;
+    --theme-card: #ffffff;
+  }
+
+  :root[data-theme="dinner"] {
+    /* Premium Dinner Mode Colors - Deep Charcoal/Slate */
+    --theme-cream: #111114;        /* Deep charcoal onyx background */
+    --theme-cream-dark: #050505;   /* Pure abyss */
+    --theme-dark: #ffffff;         /* PURE white text */
+    --theme-red: #e11d48;          /* Vibrant rose/red for contrast */
+    --theme-red-light: #f43f5e;
+    --theme-gold: #e11d48;         /* All gold accents turn red in dinner mode */
+    --theme-card: #18181c;         /* Slightly lighter for cards */
+  }
+
+
+  :root[data-theme="dinner"] .theme-invert-in-dark {
+    filter: brightness(0) invert(1);
+  }
+
+  html {
+    scroll-behavior: initial;
+    /* Lenis handles it */
+  }
+
+  body {
+    @apply bg-brand-cream text-brand-dark font-sans antialiased selection:bg-brand-red/20 selection:text-brand-red;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+
+  /* Universal transitions for theme switching */
+  * {
+    transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+  }
+
+  /* Disable transitions on toggles or specific animated parts if needed */
+  .no-theme-transition, .no-theme-transition * {
+    transition: none !important;
+  }
+}
+
+/* Lenis smooth scroll recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Custom Scrollbar Utilities */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Menu Theme Visibility Toggles */
+:root[data-theme="dinner"] [data-modes]:not([data-modes~="dinner"]) {
+  display: none !important;
+}
+
+:root:not([data-theme="dinner"]) [data-modes]:not([data-modes~="lunch"]) {
+  display: none !important;
+}
+
+/* Hide empty category sections and nav items based on theme */
+:root[data-theme="dinner"] section.js-menu-category:not(:has([data-modes~="dinner"])),
+:root[data-theme="dinner"] nav a[data-category-modes]:not([data-category-modes~="dinner"]) {
+  display: none !important;
+}
+
+:root:not([data-theme="dinner"]) section.js-menu-category:not(:has([data-modes~="lunch"])),
+:root:not([data-theme="dinner"]) nav a[data-category-modes]:not([data-category-modes~="lunch"]) {
+  display: none !important;
+}

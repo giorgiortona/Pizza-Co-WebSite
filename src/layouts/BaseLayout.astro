@@ -1,0 +1,389 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+import LanguagePicker from "../components/LanguagePicker.astro";
+import ThemeToggle from "../components/ThemeToggle";
+import Preloader from "../components/Preloader.astro";
+import {
+  getLangFromUrl,
+  useTranslations,
+  useTranslatedPath,
+} from "../i18n/utils";
+
+const { title } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tPath = useTranslatedPath(lang);
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>
+      const storedTheme = localStorage.getItem("pizza_theme");
+      if (storedTheme === "dinner") {
+        document.documentElement.setAttribute("data-theme", "dinner");
+      } else {
+        document.documentElement.setAttribute("data-theme", "lunch");
+      }
+    </script>
+
+    <meta
+      name="description"
+      content={typeof site.description === "string"
+        ? site.description
+        : site.description[lang] || site.description.it}
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-brand-cream text-brand-dark min-h-screen flex flex-col">
+    <Preloader />
+    <!-- Header with GSAP Auto-hide on scroll -->
+    <header
+      id="main-header"
+      class="fixed top-0 left-0 w-full z-50 px-4 py-4 transition-transform duration-500 ease-out"
+    >
+      <div class="mx-auto max-w-6xl">
+        <div
+          class="flex items-center justify-between gap-1 rounded-full border border-white/20 bg-brand-card/70 px-4 sm:px-6 py-3 shadow-lg backdrop-blur-md"
+        >
+          <a href="/" class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <img
+              src="/logo.png"
+              alt={`Logo ${site.name}`}
+              class="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-full object-cover shadow-sm"
+            />
+            <span
+              class="font-serif text-[1.05rem] sm:text-lg font-bold tracking-tight md:text-xl whitespace-nowrap"
+            >
+              {site.name}
+            </span>
+          </a>
+
+          <nav class="hidden md:flex items-center gap-1">
+            {
+              [
+                { path: "/", label: t("nav.home") },
+                { path: "/menu", label: t("nav.menu") },
+                { path: "/storia", label: t("nav.storia") },
+                { path: "/dove-siamo", label: t("nav.dovesiamo") },
+                { path: "/contatti", label: t("nav.contatti") },
+              ].map((link) => {
+                const translatedUrl = tPath(link.path);
+                const isActive =
+                  Astro.url.pathname === translatedUrl ||
+                  (Astro.url.pathname.startsWith(translatedUrl) &&
+                    link.path !== "/");
+
+                return (
+                  <a
+                    href={translatedUrl}
+                    class:list={[
+                      "rounded-full px-5 py-2 text-sm font-medium transition-colors duration-300",
+                      isActive
+                        ? "bg-brand-red text-white shadow-md"
+                        : "text-brand-dark/80 hover:bg-brand-dark/5 hover:text-brand-dark",
+                    ]}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })
+            }
+          </nav>
+
+          <div class="flex flex-row items-center text-brand-dark">
+            <ThemeToggle client:load />
+            <div class="hidden md:block ml-2">
+              <LanguagePicker />
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="md:hidden flex flex-col items-end gap-1.5 p-1 sm:p-2 ml-2 sm:ml-4 relative z-[60]" aria-label="Menu">
+              <span class="hamburger-line block h-[2px] w-6 bg-brand-dark font-bold rounded-full"></span>
+              <span class="hamburger-line block h-[2px] w-6 bg-brand-dark rounded-full"></span>
+              <span class="hamburger-line block h-[2px] w-4 bg-brand-dark rounded-full"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Fullscreen Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 z-[55] bg-brand-cream/95 backdrop-blur-md flex flex-col justify-center items-center px-6" style="display: none;">
+      <nav class="flex flex-col items-center gap-6 w-full max-w-sm mt-8">
+        {
+          [
+            { path: "/", label: t("nav.home") },
+            { path: "/menu", label: t("nav.menu") },
+            { path: "/storia", label: t("nav.storia") },
+            { path: "/dove-siamo", label: t("nav.dovesiamo") },
+            { path: "/contatti", label: t("nav.contatti") },
+          ].map((link) => {
+            const translatedUrl = tPath(link.path);
+            const isActive =
+              Astro.url.pathname === translatedUrl ||
+              (Astro.url.pathname.startsWith(translatedUrl) &&
+                link.path !== "/");
+
+            return (
+              <a
+                href={translatedUrl}
+                class:list={[
+                  "mobile-nav-link font-serif text-4xl tracking-tight transition-colors duration-300",
+                  isActive
+                    ? "text-brand-red italic"
+                    : "text-brand-dark hover:text-brand-red",
+                ]}
+              >
+                {link.label}
+              </a>
+            );
+          })
+        }
+      </nav>
+      
+      <div class="mobile-nav-link mt-10 mb-32 flex justify-center">
+        <LanguagePicker class="" />
+      </div>
+      
+      <div class="mobile-nav-link mt-10 flex flex-col items-center gap-4 text-brand-dark/60 text-sm font-semibold tracking-widest uppercase">
+        <p>{site.phone}</p>
+        <p>{site.email}</p>
+      </div>
+    </div>
+
+    <main class="flex-grow pt-24 md:pt-32">
+      <slot />
+    </main>
+
+    <footer class="mt-20 border-t border-brand-dark/10 bg-brand-cream-dark">
+      <div class="mx-auto max-w-6xl px-6 py-12 md:py-16">
+        <div class="grid gap-10 md:grid-cols-3 items-start">
+          <div>
+            <a href="/" class="flex items-center gap-3 mb-4">
+              <img
+                src="/logo.png"
+                alt="Logo"
+                class="h-12 w-12 rounded-full shadow-sm"
+              />
+              <span class="font-serif text-xl md:text-2xl font-bold whitespace-nowrap">{site.name}</span>
+            </a>
+            <p class="text-brand-dark/70 text-sm max-w-sm">
+              {
+                typeof site.tagline === "string"
+                  ? site.tagline
+                  : site.tagline[lang] || site.tagline.it
+              }
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-serif text-lg font-bold mb-4">
+              {t("footer.findus")}
+            </h4>
+            <p class="text-brand-dark/80 text-sm mb-2">{site.address}</p>
+            <div class="flex flex-col gap-1 text-sm text-brand-dark/80">
+              {
+                ((site.openingHours as any)[lang] || site.openingHours.it).map(
+                  (hour: string) => <p>{hour}</p>
+                )
+              }
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-serif text-lg font-bold mb-4">
+              {t("footer.contacts")}
+            </h4>
+            <div class="flex flex-col gap-2 text-sm">
+              <a
+                href={`tel:${site.phone}`}
+                class="text-brand-dark/80 hover:text-brand-red transition-colors"
+                >{site.phone}</a
+              >
+              <a
+                href={`mailto:${site.email}`}
+                class="text-brand-dark/80 hover:text-brand-red transition-colors"
+                >{site.email}</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-12 pt-8 border-t border-brand-dark/10 text-center text-sm text-brand-dark/50"
+        >
+          © {new Date().getFullYear()}
+          {site.name}. {t("footer.rights")}
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Torna su" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-brand-red text-brand-cream shadow-[0_8px_30px_rgb(200,30,30,0.4)] opacity-0 pointer-events-none translate-y-10 transition-all duration-500 hover:bg-brand-red-light hover:scale-110">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+
+    <!-- Global Scripts: GSAP & Native Scroll Logic -->
+    <script>
+      import gsap from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({ ignoreMobileResize: true });
+
+      // Hide/Show Header on Scroll
+      let jsHeader = document.getElementById("main-header");
+      let categoryNav = document.getElementById("category-nav");
+      let isMenuOpen = false;
+      let isTouchingNav = false;
+      let navTouchTimeout: any;
+
+      if (categoryNav) {
+        categoryNav.addEventListener("touchstart", () => {
+          clearTimeout(navTouchTimeout);
+          isTouchingNav = true;
+        }, { passive: true });
+        
+        const endTouch = () => {
+          navTouchTimeout = setTimeout(() => { isTouchingNav = false; }, 500);
+        };
+        
+        categoryNav.addEventListener("touchend", endTouch, { passive: true });
+        categoryNav.addEventListener("touchcancel", endTouch, { passive: true });
+      }
+
+      // Back to top logic
+      const backToTopBtn = document.getElementById("back-to-top");
+      if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      if (jsHeader || categoryNav || backToTopBtn) {
+        let lastScrollY = window.scrollY;
+        
+        window.addEventListener("scroll", () => {
+          let currentScroll = window.scrollY;
+          let direction = currentScroll > lastScrollY ? 1 : -1;
+          lastScrollY = currentScroll;
+          
+          // Show back to top button after 500px of scrolling
+          if (backToTopBtn) {
+            if (currentScroll > 500) {
+              backToTopBtn.classList.remove("opacity-0", "pointer-events-none", "translate-y-10");
+              backToTopBtn.classList.add("opacity-100", "pointer-events-auto", "translate-y-0");
+            } else {
+              backToTopBtn.classList.add("opacity-0", "pointer-events-none", "translate-y-10");
+              backToTopBtn.classList.remove("opacity-100", "pointer-events-auto", "translate-y-0");
+            }
+          }
+
+          if (isMenuOpen || isTouchingNav) return; // Prevent header hiding when menu is open or interacting with nav
+          
+          if (currentScroll > 50 && direction === 1) {
+            // Scrolling down
+            if (jsHeader) jsHeader.style.transform = "translateY(-100%)";
+            if (categoryNav && window.innerWidth < 1024 && currentScroll > 350) {
+              categoryNav.style.transform = "translateY(-200px)";
+              categoryNav.style.opacity = "0";
+            }
+          } else if (direction === -1 || currentScroll <= 50) {
+            // Scrolling up or top of page
+            if (jsHeader) jsHeader.style.transform = "translateY(0)";
+            if (categoryNav) {
+              categoryNav.style.transform = "translateY(0)";
+              categoryNav.style.opacity = "1";
+            }
+          }
+        }, { passive: true });
+      }
+
+      // Mobile Menu Logic
+      const mobileBtn = document.getElementById("mobile-menu-btn");
+      const overlay = document.getElementById("mobile-menu-overlay");
+      const lines = document.querySelectorAll(".hamburger-line");
+      const navLinks = document.querySelectorAll(".mobile-nav-link");
+
+      if (mobileBtn && overlay) {
+        gsap.set(overlay, { yPercent: -100, display: "none" });
+
+        const menuTl = gsap.timeline({
+          paused: true,
+          onStart: () => {
+            overlay.style.display = "flex";
+            if (jsHeader) jsHeader.style.transform = "translateY(0)"; // force header visible
+          },
+          onReverseComplete: () => {
+            overlay.style.display = "none";
+          },
+        });
+
+        menuTl.to(overlay, {
+          yPercent: 0,
+          duration: 0.8,
+          ease: "power4.inOut",
+        }).fromTo(
+          navLinks,
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        );
+
+        mobileBtn.addEventListener("click", () => {
+          isMenuOpen = !isMenuOpen;
+
+          if (isMenuOpen) {
+            // Animate to X
+            gsap.to(lines[0], { y: 8, rotation: 45, duration: 0.4, ease: "back.out(1.5)" });
+            gsap.to(lines[1], { opacity: 0, duration: 0.2 });
+            gsap.to(lines[2], { y: -8, width: "1.5rem", rotation: -45, duration: 0.4, ease: "back.out(1.5)" });
+            
+            document.body.style.overflow = "hidden"; // lock scroll
+            menuTl.play();
+          } else {
+            // Animate back to Hamburger
+            gsap.to(lines[0], { y: 0, rotation: 0, duration: 0.4, ease: "back.out(1.5)" });
+            gsap.to(lines[1], { opacity: 1, duration: 0.4 });
+            gsap.to(lines[2], { y: 0, width: "1rem", rotation: 0, duration: 0.4, ease: "back.out(1.5)" });
+            
+            document.body.style.overflow = ""; // unlock scroll
+            menuTl.reverse();
+          }
+        });
+
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+          if(link.tagName.toLowerCase() === 'a') {
+            link.addEventListener('click', () => {
+              if (isMenuOpen) {
+                mobileBtn.click();
+              }
+            });
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,325 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HeroSlider from "../HeroSlider.astro";
+import { site } from "../../data/site";
+import HomeSpecialtiesStack from "../HomeSpecialtiesStack";
+import { getLangFromUrl, useTranslations, useTranslatedPath } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tPath = useTranslatedPath(lang);
+
+let googleReviews: {
+  name: string;
+  rating: number;
+  total: number;
+  url: string;
+  reviews: {
+    author_name: string;
+    relative_time_description: string;
+    rating: number;
+    text: string;
+    profile_photo_url?: string;
+  }[];
+} | null = null;
+
+try {
+  const response = await fetch(new URL("/api/google-reviews.json", Astro.url));
+  const data = await response.json();
+
+  if (data?.result) {
+    googleReviews = {
+      name: data.result.name,
+      rating: data.result.rating,
+      total: data.result.user_ratings_total,
+      url: data.result.url,
+      reviews: Array.isArray(data.result.reviews)
+        ? data.result.reviews.filter((r: any) => r.rating >= 4).slice(0, 4)
+        : [],
+    };
+  }
+} catch (error) {
+  console.error("Errore recensioni Google:", error);
+}
+
+const heroImages = [
+  {
+    src: "/images/hero/foto-2.jpg?v=2",
+    alt: "Foto 2",
+    position: "50% 50%",
+  },
+  {
+    src: "/images/hero/foto-1.jpg?v=2",
+    alt: "Foto 1",
+    position: "50% 35%",
+  },
+  {
+    src: "/images/hero/foto-3.jpg?v=2",
+    alt: "Foto 3",
+    position: "50% 25%",
+  },
+  {
+    src: "/images/hero/foto-4.jpg?v=2",
+    alt: "Foto 4",
+    position: "50% 20%",
+  },
+];
+
+const specialties = [
+  {
+    title: t('home.spec.pucce.title'),
+    description: t('home.spec.pucce.desc'),
+    image: "/images/specialita/pucce.jpg?v=2",
+    alt: "Puccia farcita",
+  },
+  {
+    title: t('home.spec.frise.title'),
+    description: t('home.spec.frise.desc'),
+    image: "/images/specialita/frise.jpg?v=2",
+    alt: "Frisa con ingredienti freschi",
+  },
+  {
+    title: t('home.spec.pizze_fritte.title'),
+    description: t('home.spec.pizze_fritte.desc'),
+    image: "/images/specialita/pizze-fritte.jpg?v=2",
+    alt: "Pizza fritta artigianale",
+  },
+];
+---
+
+<BaseLayout title={site.name}>
+  <!-- Hero Section -->
+  <HeroSlider
+    images={heroImages}
+    title={site.name}
+    subtitle={typeof site.tagline === 'string' ? site.tagline : (site.tagline as any)[lang] || (site.tagline as any).it}
+  />
+
+  <div class="mx-auto max-w-6xl px-4 py-24 sm:py-32 space-y-32">
+    <!-- Identità e Info -->
+    <section class="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr] items-start">
+      <div class="rounded-3xl border border-brand-dark/10 bg-brand-card p-10 sm:p-14 shadow-xl relative overflow-hidden">
+        <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-gold/10 rounded-full blur-3xl"></div>
+        <div class="relative z-10">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-brand-gold mb-6">
+            {t('home.id.title')}
+          </p>
+
+          <h2 class="text-4xl font-serif text-brand-dark leading-tight sm:text-5xl mb-8">
+            {t('home.id.heading')}
+          </h2>
+
+          <div class="space-y-6 text-lg leading-relaxed text-brand-dark/80">
+            <p>{typeof site.description === 'string' ? site.description : site.description[lang] || site.description.it}</p>
+            <p>
+              {t('home.id.desc1')}
+            </p>
+          </div>
+
+          <div class="mt-12 flex flex-wrap gap-4">
+            <a
+              href={tPath('/storia')}
+              class="inline-flex items-center rounded-full bg-brand-dark px-8 py-3.5 text-sm font-semibold text-brand-cream shadow-md transition hover:bg-black hover:-translate-y-1"
+            >
+              {t('home.id.btn_story')}
+            </a>
+            <a
+              href={tPath('/menu')}
+              class="inline-flex items-center rounded-full border border-brand-dark/20 bg-brand-cream px-8 py-3.5 text-sm font-semibold text-brand-dark transition hover:bg-brand-card hover:-translate-y-1 hover:shadow-md"
+            >
+              {t('home.id.btn_menu')}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-brand-red/10 bg-brand-red/5 p-10 sm:p-14 shadow-lg backdrop-blur-sm">
+        <p class="text-sm font-bold uppercase tracking-[0.25em] text-brand-red mb-6">
+          {t('home.info.title')}
+        </p>
+
+        <h2 class="text-3xl font-serif text-brand-dark leading-tight mb-8">
+          {t('home.info.heading')}
+        </h2>
+
+        <div class="space-y-8">
+          <div>
+            <p class="text-brand-dark/80 font-medium mb-2">{t('home.info.address')}</p>
+            <p class="text-lg text-brand-dark">{site.address}</p>
+            <a href={site.mapsUrl} target="_blank" rel="noreferrer" class="inline-block mt-3 text-sm font-semibold text-brand-red hover:text-brand-red-light underline underline-offset-4">
+              {t('home.info.maps')}
+            </a>
+          </div>
+
+          <div>
+            <p class="text-brand-dark/80 font-medium mb-2">{t('home.info.contacts')}</p>
+            <div class="flex flex-col gap-2">
+              <a href={`tel:${site.phone}`} class="text-lg text-brand-dark hover:text-brand-red transition-colors">
+                {site.phone}
+              </a>
+              <a href={`mailto:${site.email}`} class="text-lg text-brand-dark hover:text-brand-red transition-colors">
+                {site.email}
+              </a>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-brand-red/10">
+            <h3 class="font-serif text-xl text-brand-dark mb-4">{t('home.info.hours')}</h3>
+            <ul class="space-y-3">
+              {((site.openingHours as any)[lang] || site.openingHours.it).map((h: string) => (
+                <li class="flex items-start">
+                  <span class="text-brand-red mr-3 mt-1 text-xs">◆</span>
+                  <span class="text-brand-dark/80 font-medium">{h}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specialties Stack Component -->
+    <HomeSpecialtiesStack 
+      items={specialties} 
+      labels={{
+        subtitle: t('home.spec.subtitle'),
+        title: t('home.spec.title'),
+        desc: t('home.spec.desc'),
+        btn: t('home.spec.btn')
+      }}
+      client:load 
+    />
+
+    <!-- Google Reviews Section -->
+    {googleReviews && (
+      <section class="relative overflow-hidden rounded-3xl border border-brand-dark/10 bg-brand-card shadow-2xl p-8 sm:p-16">
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-red/5 rounded-full blur-3xl"></div>
+        
+        <!-- Mobile Title (Appears above the rating box on small screens) -->
+        <div class="relative z-10 mb-8 lg:hidden">
+          <p class="text-sm font-bold uppercase tracking-[0.25em] text-brand-gold mb-4">
+            {t('home.rev.title')}
+          </p>
+          <h2 class="text-4xl font-serif text-brand-dark leading-tight sm:text-5xl">
+            {t('home.rev.heading')}
+          </h2>
+        </div>
+
+        <div class="relative z-10 grid gap-12 lg:grid-cols-[1fr_2fr] items-start">
+          
+          <!-- Summary Sidebar -->
+          <div class="relative lg:sticky lg:top-32 mb-8 lg:mb-0 rounded-3xl border border-brand-cream bg-brand-cream/50 p-8 shadow-sm backdrop-blur-md">
+            <div class="flex items-center gap-4 mb-8">
+              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-brand-card shadow-md">
+                <img src="/icons/Google_logo.svg" alt="Google" class="h-6 w-auto" />
+              </div>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-brand-dark/50">{t('home.rev.rating')}</p>
+                <p class="font-serif text-lg text-brand-dark font-bold">{googleReviews.name}</p>
+              </div>
+            </div>
+
+            <div class="pt-8 border-t border-brand-dark/10">
+              <div class="text-6xl font-serif text-brand-dark tracking-tighter mb-4">
+                {googleReviews.rating?.toFixed(1)}
+              </div>
+              <div class="flex gap-1 text-brand-gold text-xl mb-3">
+                <span>★</span><span>★</span><span>★</span><span>★</span>
+                <span class={googleReviews.rating >= 4.8 ? "" : "opacity-30"}>★</span>
+              </div>
+              <p class="text-brand-dark/70 text-sm">
+                {t('home.rev.based')} <strong class="text-brand-dark font-bold">{googleReviews.total}</strong> {t('home.rev.reviews')}
+              </p>
+            </div>
+
+            <a
+              href={googleReviews.url}
+              target="_blank"
+              rel="noreferrer"
+              class="mt-8 flex w-full items-center justify-center rounded-full border-2 border-brand-dark bg-transparent px-6 py-3 text-sm font-bold text-brand-dark hover:bg-brand-dark hover:text-brand-cream transition-all duration-300"
+            >
+              {t('home.rev.readall')}
+            </a>
+          </div>
+
+          <!-- Reviews Grid -->
+          <div class="w-full">
+            <div class="mb-10 hidden lg:block">
+              <p class="text-sm font-bold uppercase tracking-[0.25em] text-brand-gold mb-4">
+                {t('home.rev.title')}
+              </p>
+              <h2 class="text-4xl font-serif text-brand-dark leading-tight sm:text-5xl">
+                {t('home.rev.heading')}
+              </h2>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2">
+              {googleReviews.reviews?.slice(0, 4).map((review, index) => (
+                <article class="group relative rounded-2xl border border-brand-cream-dark bg-brand-card p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-brand-gold/30">
+                  <div class="flex items-start gap-4 mb-6">
+                    {review.profile_photo_url ? (
+                      <img
+                        src={review.profile_photo_url}
+                        alt={review.author_name}
+                        class="h-12 w-12 rounded-full object-cover shadow-sm group-hover:ring-2 ring-brand-gold/30 transition-all"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="flex h-12 w-12 items-center justify-center rounded-full bg-brand-cream font-serif text-lg font-bold text-brand-dark shadow-sm">
+                        {review.author_name?.charAt(0)}
+                      </div>
+                    )}
+                    <div>
+                      <h3 class="font-bold text-brand-dark">{review.author_name}</h3>
+                      <p class="text-xs text-brand-dark/50 mt-1">{review.relative_time_description}</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-1 text-brand-gold/80 text-sm mb-4">
+                    {"★".repeat(review.rating)}
+                    {"☆".repeat(5 - review.rating)}
+                  </div>
+                  <p class="text-brand-dark/80 text-sm leading-relaxed italic">
+                    "{review.text}"
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Call to Action Finale -->
+    <section class="relative overflow-hidden rounded-3xl bg-[#12100e] px-8 py-20 text-center shadow-2xl sm:px-16 sm:py-24">
+      <!-- Decorazioni di background -->
+      <div class="absolute inset-0 z-0 opacity-20 bg-[url('/images/hero/foto-1.jpg')] bg-cover bg-center mix-blend-luminosity"></div>
+      <div class="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/95 to-black/80"></div>
+      
+      <div class="relative z-10 max-w-3xl mx-auto">
+        <p class="text-sm font-bold uppercase tracking-[0.25em] text-brand-gold mb-6">
+          {t('home.cta.title')}
+        </p>
+        <h2 class="text-4xl font-serif text-white sm:text-5xl leading-tight mb-8">
+          {t('home.cta.heading')}
+        </h2>
+        <p class="text-lg text-white/70 mb-12">
+          {t('home.cta.desc')}
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-5">
+          <a
+            href={tPath('/menu')}
+            class="inline-flex items-center justify-center rounded-full bg-brand-red px-10 py-4 font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-brand-red-light"
+          >
+            {t('home.cta.btn_menu')}
+          </a>
+          <a
+            href={`tel:${site.phone}`}
+            class="inline-flex items-center justify-center rounded-full border-2 border-white/50 bg-transparent px-10 py-4 font-semibold text-white transition-all hover:bg-white hover:text-black"
+          >
+            {t('home.cta.btn_book')}
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

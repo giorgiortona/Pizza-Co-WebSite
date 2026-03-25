@@ -1,0 +1,88 @@
+---
+import { languages } from '../i18n/ui';
+import { getLangFromUrl, useTranslatedPath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const tPath = useTranslatedPath(lang);
+
+interface Props {
+  class?: string;
+}
+const { class: className = "ml-4" } = Astro.props;
+
+const flags: Record<string, string> = {
+  it: "🇮🇹",
+  en: "🇬🇧",
+  fr: "🇫🇷"
+};
+---
+
+<div class={`relative lang-dropdown z-50 ${className}`}>
+  <button type="button" class="lang-btn flex items-center gap-2 rounded-full bg-brand-dark/5 hover:bg-brand-dark/10 px-3 py-1.5 text-sm font-medium transition-colors border border-brand-dark/10">
+    <span class="text-base leading-none" aria-hidden="true">{flags[lang as keyof typeof flags]}</span>
+    <span class="uppercase font-bold tracking-widest">{lang}</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-brand-dark/60 transition-transform group-hover:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+    </svg>
+  </button>
+  
+  <div class="lang-menu absolute right-0 top-full pt-2 opacity-0 invisible lg:group-hover:opacity-100 lg:group-hover:visible transition-all duration-200">
+    <div class="flex flex-col overflow-hidden rounded-xl bg-brand-card shadow-xl border border-brand-dark/5 w-40">
+      {Object.entries(languages).map(([label, name]) => (
+        <a 
+          href={tPath(Astro.url.pathname, label)} 
+          class={`px-4 py-2.5 text-sm transition-colors hover:bg-brand-dark/5 flex items-center gap-3 ${lang === label ? 'font-bold text-brand-red bg-brand-red/5' : 'text-brand-dark/80'}`}
+          onclick="sessionStorage.removeItem('pizza_co_loaded');"
+        >
+          <span class="text-base leading-none" aria-hidden="true">{flags[label as keyof typeof flags]}</span>
+          <span class="flex-1">{name}</span>
+          {lang === label && (
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-red shrink-0"></span>
+          )}
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const setupLangDropdown = () => {
+    const dropdowns = document.querySelectorAll('.lang-dropdown');
+    
+    dropdowns.forEach(dropdown => {
+      const btn = dropdown.querySelector('.lang-btn');
+      const menu = dropdown.querySelector('.lang-menu');
+      
+      if (btn && menu) {
+        // Desktop hover is handled by CSS (lg:group-hover), 
+        // Mobile tap is handled by this JS
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = menu.classList.contains('opacity-100');
+          
+          // Close others
+          document.querySelectorAll('.lang-menu').forEach(m => {
+            m.classList.remove('opacity-100', 'visible');
+            m.classList.add('opacity-0', 'invisible');
+          });
+
+          if (!isOpen) {
+            menu.classList.remove('opacity-0', 'invisible');
+            menu.classList.add('opacity-100', 'visible');
+          }
+        });
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.lang-menu').forEach(m => {
+        m.classList.remove('opacity-100', 'visible');
+        m.classList.add('opacity-0', 'invisible');
+      });
+    });
+  };
+
+  setupLangDropdown();
+  document.addEventListener('astro:page-load', setupLangDropdown);
+</script>

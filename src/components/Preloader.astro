@@ -1,0 +1,84 @@
+---
+import { site } from '../data/site';
+---
+
+<div id="site-preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-brand-cream">
+  <div class="relative flex flex-col items-center">
+    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow-2xl mb-6 relative js-preloader-logo opacity-0 translate-y-8">
+      <img src="/logo.png" alt="Logo Preloader" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-brand-red/10 mix-blend-overlay"></div>
+    </div>
+    <div class="overflow-hidden">
+      <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-dark js-preloader-text translate-y-full">
+        {site.name}
+      </h2>
+    </div>
+    <div class="mt-8 flex gap-2 js-preloader-dots opacity-0">
+      <span class="w-2.5 h-2.5 rounded-full bg-brand-red"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-brand-gold"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-brand-dark/50"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  import gsap from 'gsap';
+
+  // Solo lato client
+  if (typeof window !== 'undefined') {
+    const preloader = document.getElementById('site-preloader');
+    
+    if (preloader) {
+      // Controlliamo se ha già visto l'animazione in questa sessione (scheda del browser)
+      // Per debug, puoi temporaneamente commentare questa riga e inizializzare hasLoaded = false
+      const hasLoaded = sessionStorage.getItem('pizza_co_loaded');
+      
+      if (hasLoaded) {
+        // Nascondiamo istantaneamente se ha già navigato
+        preloader.style.display = 'none';
+      } else {
+        // Blocchiamo lo scroll temporaneamente
+        document.body.style.overflow = 'hidden';
+        
+        const tl = gsap.timeline({
+          onComplete: () => {
+            sessionStorage.setItem('pizza_co_loaded', 'true');
+            document.body.style.overflow = '';
+            
+            // Animazione di uscita del preloader (scivola in alto)
+            gsap.to(preloader, {
+              yPercent: -100,
+              duration: 0.8,
+              ease: "power4.inOut",
+              onComplete: () => { preloader.style.display = 'none'; }
+            });
+          }
+        });
+
+        tl.to('.js-preloader-logo', {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "back.out(1.5)"
+        })
+        .to('.js-preloader-text', {
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out"
+        }, "-=0.4")
+        .to('.js-preloader-dots', {
+          opacity: 1,
+          duration: 0.3
+        }, "-=0.2")
+        .to('.js-preloader-dots span', {
+          y: -12,
+          stagger: 0.15,
+          duration: 0.4,
+          ease: "power1.inOut",
+          yoyo: true,
+          repeat: 1
+        });
+      }
+    }
+  }
+</script>

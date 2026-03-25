@@ -1,0 +1,161 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../data/site";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('dove.hero.title')}>
+  <!-- Hero Section -->
+  <header class="relative bg-[#12100e] text-white pt-40 pb-32 md:pt-48 md:pb-40 overflow-hidden -mt-24 md:-mt-32">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-[url('/images/hero/Locale.jpg')] bg-cover bg-center opacity-70"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-[#12100e]/80 via-[#12100e]/30 to-brand-gold/10"></div>
+      <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-brand-red/10 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/3"></div>
+    </div>
+    
+    <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
+      <p class="text-sm font-bold uppercase tracking-[0.3em] text-brand-gold mb-6 js-dove-reveal opacity-0">
+        {t('dove.hero.subtitle')}
+      </p>
+      <h1 class="text-5xl sm:text-7xl md:text-8xl font-serif tracking-tight mb-8 js-dove-reveal opacity-0">
+        {t('dove.hero.title')}
+      </h1>
+      <p class="text-xl sm:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed font-light js-dove-reveal opacity-0">
+        {t('dove.hero.desc')}
+      </p>
+    </div>
+  </header>
+
+  <div class="bg-brand-cream py-24 sm:py-32 relative overflow-hidden">
+    <div class="mx-auto max-w-7xl px-6">
+      
+      <div class="grid gap-8 lg:grid-cols-[1fr_1.2fr] items-start">
+        
+        <!-- Info column -->
+        <div class="space-y-8">
+          
+          <!-- Indirizzo Card -->
+          <div class="js-dove-card opacity-0 rounded-3xl border border-brand-dark/10 bg-brand-card p-8 sm:p-10 shadow-xl relative transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+            <div class="flex items-start gap-6 relative z-10">
+              <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-brand-cream text-brand-dark border border-brand-dark/5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21s-6-5.33-6-11a6 6 0 1 1 12 0c0 5.67-6 11-6 11Z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </div>
+
+              <div class="min-w-0">
+                <h2 class="text-2xl font-serif text-brand-dark mb-4">{t('dove.info.address')}</h2>
+                <p class="text-brand-dark/80 text-lg leading-relaxed mb-6 font-light">
+                  {site.address}
+                </p>
+
+                <a
+                  href={site.mapsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-flex items-center gap-2 rounded-full bg-brand-dark px-6 py-3.5 text-sm font-semibold text-brand-cream transition-all duration-300 hover:-translate-y-1 hover:bg-black hover:shadow-lg"
+                >
+                  {t('dove.info.maps')}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17 17 7" />
+                    <path d="M8 7h9v9" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Orari Card -->
+          <div class="js-dove-card opacity-0 rounded-3xl border border-brand-dark/10 bg-brand-card p-8 sm:p-10 shadow-xl relative transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+            <div class="flex items-start gap-6 relative z-10">
+              <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-brand-gold/10 text-brand-gold border border-brand-gold/20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="8" />
+                  <path d="M12 8v4l2.5 2.5" />
+                </svg>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <h2 class="text-2xl font-serif text-brand-dark mb-6">{t('dove.info.hours')}</h2>
+                <ul class="space-y-4">
+                  {((site.openingHours as any)[lang] || site.openingHours.it).map((hour: string) => (
+                    <li class="rounded-2xl border border-brand-dark/5 bg-brand-cream/50 px-6 py-4 text-brand-dark/80 flex items-start text-lg font-light">
+                      <span class="text-brand-gold mr-3 mt-1.5 text-xs">◆</span>
+                      <span>{hour}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Map column -->
+        <div class="js-dove-map opacity-0 overflow-hidden rounded-[2.5rem] border border-brand-dark/10 bg-brand-card p-2 shadow-2xl h-[500px] lg:h-full lg:min-h-[600px] transition-transform duration-500 hover:shadow-3xl">
+          <div class="overflow-hidden rounded-[2rem] w-full h-full relative group">
+            <div class="absolute inset-0 bg-brand-dark/5 z-10 pointer-events-none transition-opacity duration-300 group-hover:opacity-0"></div>
+            <iframe
+              src={site.mapsEmbedUrl}
+              width="100%"
+              height="100%"
+              class="w-full h-full"
+              style="border:0; filter: grayscale(20%) contrast(110%);"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              title={`Mappa di ${site.name}`}
+            ></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReducedMotion) {
+    // Hero Entrance
+    gsap.fromTo(".js-dove-reveal", 
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out", delay: 0.1 }
+    );
+
+    // Cards and map reveal
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".bg-brand-cream",
+        start: "top 75%",
+        once: true,
+      }
+    });
+
+    tl.fromTo(".js-dove-card",
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" }
+    );
+
+    tl.fromTo(".js-dove-map",
+      { y: 40, opacity: 0, scale: 0.95 },
+      { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power2.out" },
+      "-=0.6"
+    );
+
+  } else {
+    document.querySelectorAll(".js-dove-reveal, .js-dove-card, .js-dove-map").forEach(el => {
+      el.classList.remove("opacity-0");
+    });
+  }
+</script>

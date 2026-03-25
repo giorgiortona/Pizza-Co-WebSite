@@ -1,0 +1,203 @@
+---
+type HeroImage = {
+  src: string;
+  alt?: string;
+  position?: string;
+  scale?: number;
+};
+
+type Props = {
+  images: HeroImage[];
+  title: string;
+  subtitle: string;
+};
+
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { images, title, subtitle } = Astro.props;
+---
+
+<section class="relative h-screen w-full overflow-hidden bg-brand-dark -mt-24 md:-mt-32">
+  <div id="hero-slider" class="relative h-full w-full">
+    {images.map((image, index) => (
+      <div
+        class="hero-slide absolute inset-0 h-full w-full pointer-events-none opacity-0"
+        data-slide={index}
+      >
+        <img
+          src={image.src}
+          alt={image.alt ?? `${title} - immagine ${index + 1}`}
+          class="hero-img h-full w-full object-cover scale-105"
+          style={`
+            object-position: ${image.position ?? "50% 50%"};
+          `}
+        />
+        <!-- Vignette and Dark overlay for text contrast (Lightened) -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+        <div class="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]"></div>
+      </div>
+    ))}
+
+    <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
+      <div class="hero-content max-w-4xl opacity-0 translate-y-8">
+        <p class="hero-eyebrow text-brand-gold font-bold tracking-[0.3em] uppercase text-xs sm:text-sm mb-6 drop-shadow-md">
+          {t('home.hero.welcome')}
+        </p>
+
+        <h1 class="hero-title text-white font-serif text-5xl sm:text-7xl md:text-8xl tracking-tight mb-6 drop-shadow-lg">
+          {title}
+        </h1>
+
+        <p class="hero-subtitle text-white/90 text-lg sm:text-xl md:text-2xl font-light max-w-2xl mx-auto drop-shadow-md mb-10 leading-relaxed">
+          {subtitle}
+        </p>
+
+        <div class="hero-actions flex flex-wrap justify-center gap-4">
+          <a
+            href="/menu"
+            class="inline-flex items-center justify-center rounded-full bg-brand-red px-8 py-3.5 text-sm font-semibold text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-brand-red-light"
+          >
+            {t('home.id.btn_menu')}
+          </a>
+
+          <a
+            href="/storia"
+            class="inline-flex items-center justify-center rounded-full border border-white/30 bg-brand-card/5 px-8 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-brand-card/10 hover:border-white/50"
+          >
+            {t('home.id.btn_story')}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
+      {images.map((_, index) => (
+        <button
+          class="hero-dot h-1.5 w-12 rounded-full bg-brand-cream/30 transition-all duration-300 hover:bg-brand-cream/60"
+          data-dot={index}
+          aria-label={`Vai alla slide ${index + 1}`}
+          type="button"
+        ></button>
+      ))}
+    </div>
+    
+    <button
+      class="hero-prev absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-black opacity-0 md:opacity-100"
+      aria-label="Slide precedente"
+      type="button"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    </button>
+
+    <button
+      class="hero-next absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-black opacity-0 md:opacity-100"
+      aria-label="Slide successiva"
+      type="button"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+    </button>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+
+  const slides = document.querySelectorAll(".hero-slide");
+  const dots = document.querySelectorAll(".hero-dot");
+  const prevBtn = document.querySelector(".hero-prev");
+  const nextBtn = document.querySelector(".hero-next");
+  const heroContent = document.querySelector(".hero-content");
+  
+  if (slides.length > 0) {
+    let currentSlideIndex = 0;
+    let autoplayTimer: number;
+
+    // Initial content reveal
+    gsap.to(heroContent, {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 0.2
+    });
+
+    function goToSlide(index: number, direction = 1) {
+      if (index === currentSlideIndex && slides[index].classList.contains("active")) return;
+      
+      const outgoing = slides[currentSlideIndex];
+      const incoming = slides[index];
+
+      // Update dots
+      dots[currentSlideIndex].classList.replace("bg-brand-cream", "bg-brand-cream/30");
+      dots[index].classList.replace("bg-brand-cream/30", "bg-brand-cream");
+
+      // Set up incoming slide
+      gsap.set(incoming, { opacity: 0, zIndex: 2 });
+      gsap.set(outgoing, { zIndex: 1 });
+
+      // Animate transition (Crossfade + slight zoom out on incoming)
+      const tl = gsap.timeline();
+      
+      const incomingImg = incoming.querySelector('.hero-img');
+      gsap.fromTo(incomingImg, 
+        { scale: 1.1 },
+        { scale: 1.05, duration: 4, ease: "sine.out", overwrite: "auto" }
+      );
+
+      tl.to(incoming, {
+        opacity: 1,
+        duration: 1.2,
+        ease: "power2.inOut",
+        onComplete: () => {
+          gsap.set(outgoing, { opacity: 0 });
+          currentSlideIndex = index;
+          slides.forEach(s => s.classList.remove("active"));
+          incoming.classList.add("active");
+        }
+      });
+      
+      resetAutoplay();
+    }
+
+    function nextSlide() {
+      const nextIndex = (currentSlideIndex + 1) % slides.length;
+      goToSlide(nextIndex, 1);
+    }
+
+    function prevSlide() {
+      const prevIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+      goToSlide(prevIndex, -1);
+    }
+
+    function resetAutoplay() {
+      clearInterval(autoplayTimer);
+      autoplayTimer = window.setInterval(nextSlide, 5000);
+    }
+
+    // Event Listeners
+    nextBtn?.addEventListener("click", nextSlide);
+    prevBtn?.addEventListener("click", prevSlide);
+    
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => goToSlide(index));
+    });
+
+    // Init first slide
+    gsap.set(slides[0], { opacity: 1, zIndex: 2 });
+    slides[0].classList.add("active");
+    dots[0].classList.replace("bg-brand-cream/30", "bg-brand-cream");
+    
+    // Start slight scale animation for first slide
+    gsap.to(slides[0].querySelector('.hero-img'), {
+      scale: 1.05, 
+      duration: 4, 
+      ease: "none"
+    });
+
+    resetAutoplay();
+  }
+</script>

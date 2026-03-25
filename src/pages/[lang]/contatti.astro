@@ -1,0 +1,13 @@
+---
+import Contatti from "../../components/pages/Contatti.astro";
+import { languages, defaultLang } from "../../i18n/ui";
+
+export function getStaticPaths() {
+  return Object.keys(languages)
+    .filter(lang => lang !== defaultLang)
+    .map((lang) => ({
+      params: { lang },
+    }));
+}
+---
+<Contatti />

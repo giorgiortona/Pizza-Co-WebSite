@@ -1,0 +1,374 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { menuItems } from "../../data/menu";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const categoryLabels = {
+  pucce: t("menu.cat.pucce.name"),
+  friseddhra: t("menu.cat.friseddhra.name"),
+  "pizze fritte": t("menu.cat.pizze_fritte.name"),
+  pizze: structuredClone({ it: "Le Pizze", en: "Pizzas", fr: "Les Pizzas" })[lang as "it" | "en" | "fr"] || "Le Pizze",
+  bevande: t("menu.cat.bevande.name"),
+  birre: t("menu.cat.birre.name"),
+  "birre-artigianali": t("menu.cat.birre_artigianali.name"),
+};
+
+const categoryDescriptions = {
+  pucce: t("menu.cat.pucce.desc"),
+  friseddhra: t("menu.cat.friseddhra.desc"),
+  "pizze fritte": t("menu.cat.pizze_fritte.desc"),
+  pizze: structuredClone({ it: "Cotte in forno a legna, morbide dentro e sottili e croccanti fuori.", en: "Baked in a wood-fired oven, soft inside and thin and crispy outside.", fr: "Cuites au four à bois, moelleuses à l'intérieur et fines et croustillantes à l'extérieur." })[lang as "it" | "en" | "fr"] || "",
+  bevande: t("menu.cat.bevande.desc"),
+  birre: t("menu.cat.birre.desc"),
+  "birre-artigianali": t("menu.cat.birre_artigianali.desc"),
+};
+
+const categories = [
+  "pucce",
+  "friseddhra",
+  "pizze fritte",
+  "pizze",
+  "bevande",
+  "birre",
+  "birre-artigianali",
+] as const;
+---
+
+<BaseLayout title={t("menu.hero.title")}>
+  <!-- Hero Section -->
+  <header
+    class="relative bg-[#12100e] text-white pt-40 pb-28 md:pt-48 md:pb-36 overflow-hidden -mt-24 md:-mt-32"
+  >
+    <div
+      class="absolute inset-0 z-0 opacity-80 bg-[url('/images/hero/foto-3.jpg')] bg-cover bg-center"
+    >
+    </div>
+    <div
+      class="absolute inset-0 z-0 bg-gradient-to-t from-[#12100e]/80 via-[#12100e]/20 to-transparent"
+    >
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-6xl px-6 text-center">
+      <p
+        class="text-sm font-bold uppercase tracking-[0.25em] text-brand-gold mb-6 js-menu-reveal opacity-0"
+      >
+        {t("menu.hero.subtitle")}
+      </p>
+      <h1
+        class="text-4xl sm:text-7xl md:text-8xl font-serif tracking-tight mb-8 js-menu-reveal opacity-0 flex flex-col items-center sm:block"
+      >
+        <span class="menu-title-lunch">{t("menu.hero.title.lunch")}</span>
+        <span class="menu-title-dinner">{t("menu.hero.title.dinner")}</span>
+      </h1>
+      <p
+        class="mx-auto max-w-2xl text-lg text-white/80 leading-relaxed js-menu-reveal opacity-0"
+      >
+        <span class="menu-desc-lunch">{t("menu.hero.desc.lunch")}</span>
+        <span class="menu-desc-dinner">{t("menu.hero.desc.dinner")}</span>
+      </p>
+    </div>
+  </header>
+
+  <div class="mx-auto max-w-7xl px-4 py-24 sm:py-32">
+    <div class="flex flex-col lg:flex-row gap-12 items-start relative">
+      <!-- Sticky Navigation (Desktop: Sidebar, Mobile: Top) -->
+      <div id="category-nav" class="sticky top-28 md:top-32 z-30 w-full px-4 flex justify-center lg:justify-start lg:w-72 lg:px-0 shrink-0 pointer-events-none mb-8 lg:mb-0 transition-transform duration-300">
+        <div class="pointer-events-auto relative flex items-center mx-auto py-1.5 px-1.5 w-full sm:w-max max-w-full bg-brand-cream/70 backdrop-blur-xl border border-brand-dark/10 rounded-full shadow-lg lg:w-full lg:bg-transparent lg:backdrop-blur-none lg:border-none lg:rounded-none lg:shadow-none lg:p-0 transition-colors duration-500">
+          
+          <button id="nav-left-btn" aria-label="Scroll left" class="lg:hidden flex-shrink-0 w-8 h-8 absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-brand-card shadow-sm text-brand-dark hover:text-brand-red transition-all z-20">
+            <svg class="w-4 h-4 ml-[-2px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+
+          <nav id="category-scroll-container" data-lenis-prevent="true" class="flex lg:flex-col gap-1 overflow-x-auto w-full hide-scrollbar scroll-smooth px-10 sm:px-12 lg:px-0">
+            {
+              categories.map((category) => {
+                const catItems = menuItems.filter(i => i.category === category);
+                if (catItems.length === 0) return null;
+                const categoryModes = Array.from(new Set(catItems.flatMap(i => i.modes || ["lunch"])));
+                
+                return (
+                  <a
+                    href={`#${category}`}
+                    data-category-modes={categoryModes.join(" ")}
+                    class="whitespace-nowrap flex-shrink-0 rounded-full px-5 py-2 text-[0.95rem] font-bold text-brand-dark/80 hover:bg-brand-card hover:text-brand-red transition-all lg:px-6 lg:py-3.5 lg:hover:bg-brand-card/50 lg:w-full"
+                  >
+                    {categoryLabels[category]}
+                  </a>
+                );
+              })
+            }
+          </nav>
+
+          <button id="nav-right-btn" aria-label="Scroll right" class="lg:hidden flex-shrink-0 w-8 h-8 absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-brand-card shadow-sm text-brand-dark hover:text-brand-red transition-all z-20">
+            <svg class="w-4 h-4 mr-[-2px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Menu Categories -->
+      <div class="flex-1 w-full space-y-28">
+        {
+          categories.map((category) => {
+            const items = menuItems.filter(
+              (item) => item.category === category
+            );
+            if (items.length === 0) return null;
+
+            return (
+              <section id={category} class="scroll-mt-40 js-menu-category">
+                <div class="mb-12 text-center lg:text-left">
+                  <h2 class="text-5xl font-serif text-brand-dark mb-6 flex items-center gap-4 lg:justify-start justify-center">
+                    {categoryLabels[category]}
+                    {category === "birre-artigianali" && (
+                      <img
+                        src="/icons/Birra-Salento-logo.png"
+                        alt="Birra Salento"
+                        class="h-16 md:h-20 w-auto object-contain mix-blend-multiply"
+                      />
+                    )}
+                  </h2>
+                  <p class="text-brand-dark/70 text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    {categoryDescriptions[category]}
+                  </p>
+                </div>
+
+                <div class="grid gap-6 sm:grid-cols-2">
+                  {items.map((item, index) => (
+                    item.image ? (
+                      <article 
+                        data-modes={(item.modes || ["lunch"]).join(" ")}
+                        class="js-menu-card relative bg-brand-card border border-brand-dark/10 rounded-3xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-xl hover:border-brand-gold/40 hover:-translate-y-1 opacity-0 flex flex-col sm:col-span-2"
+                      >
+                        <div class="h-64 sm:h-80 lg:h-96 w-full overflow-hidden relative">
+                          <img src={item.image} alt="" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                          <div class="absolute bottom-6 left-6 right-6">
+                            <h3 class="text-4xl font-serif text-white mb-2 shadow-sm">
+                              {typeof item.name === "string" ? item.name : item.name[lang] || item.name.it}
+                            </h3>
+                          </div>
+                        </div>
+                        <div class="p-8">
+                          {item.description && (
+                            <p class="text-brand-dark/80 leading-relaxed text-lg max-w-2xl">
+                              {typeof item.description === "string"
+                                ? item.description
+                                : item.description[lang] || item.description.it}
+                            </p>
+                          )}
+                        </div>
+                      </article>
+                    ) : (
+                      <article 
+                        data-modes={(item.modes || ["lunch"]).join(" ")}
+                        class="js-menu-card relative bg-brand-card border border-brand-dark/10 rounded-3xl p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-brand-gold/40 hover:-translate-y-1 opacity-0 flex flex-col justify-between"
+                      >
+                        <div>
+                          <div class="flex justify-between items-start gap-4 mb-5">
+                            <h3 class="text-2xl font-serif text-brand-dark leading-tight flex items-center gap-3">
+                              {typeof item.name === "string"
+                                ? item.name
+                                : item.name[lang] || item.name.it}
+                              {item.icon && (
+                                <img
+                                  src={item.icon}
+                                  alt=""
+                                  class={`object-contain mix-blend-multiply shadow-sm ${
+                                    item.icon.includes("gassosa")
+                                      ? "w-12 h-14 md:w-14 md:h-16 rounded-md"
+                                      : "w-7 h-7 rounded-full border border-brand-dark/10"
+                                  }`}
+                                />
+                              )}
+                            </h3>
+                            {typeof item.price === "number" ? (
+                              <div class="text-lg font-bold text-brand-red bg-brand-red/5 px-4 py-1.5 rounded-full shrink-0">
+                                {item.price.toFixed(2)}€
+                              </div>
+                            ) : (
+                              <div class="flex flex-col items-end gap-1.5">
+                                <div class="text-[0.9rem] font-bold text-brand-red bg-brand-red/5 px-3 py-1 rounded-full shrink-0 whitespace-nowrap">
+                                  {t("menu.price.slice")} {item.price.trancio.toFixed(2)}€
+                                </div>
+                                <div class="text-[0.9rem] font-bold text-brand-red bg-brand-red/5 px-3 py-1 rounded-full shrink-0 whitespace-nowrap">
+                                  {t("menu.price.whole")} {item.price.intera.toFixed(2)}€
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
+                          {item.description && (
+                            <p class="text-brand-dark/70 leading-relaxed text-[0.95rem]">
+                              {typeof item.description === "string"
+                                ? item.description
+                                : item.description[lang] || item.description.it}
+                            </p>
+                          )}
+                        </div>
+
+                        <div class="mt-8 pt-5 border-t border-brand-dark/5 flex items-center justify-between">
+                          <span class="text-sm uppercase tracking-[0.2em] font-semibold text-brand-dark/50">
+                            Pizza
+                            <span class="font-serif italic font-medium text-brand-gold text-lg px-1.5 lowercase">
+                              &amp;
+                            </span>
+                            Co
+                          </span>
+                        </div>
+                      </article>
+                    )
+                  ))}
+                </div>
+              </section>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  /* In dinner mode there are fewer categories, so we remove the scroll buttons and padding to center the pills perfectly */
+  [data-theme="dinner"] #nav-left-btn,
+  [data-theme="dinner"] #nav-right-btn {
+    display: none !important;
+  }
+  
+  [data-theme="dinner"] #category-scroll-container {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+    justify-content: center !important;
+  }
+  
+  .menu-desc-dinner,
+  .menu-title-dinner {
+    display: none !important;
+  }
+  [data-theme="dinner"] .menu-desc-lunch,
+  [data-theme="dinner"] .menu-title-lunch {
+    display: none !important;
+  }
+  [data-theme="dinner"] .menu-desc-dinner,
+  [data-theme="dinner"] .menu-title-dinner {
+    display: inline !important;
+  }
+</style>
+
+<script>
+  // Script for horizontal scroll buttons on mobile category navigation
+  const setupNavScroll = () => {
+    const navContainer = document.getElementById('category-scroll-container');
+    const leftBtn = document.getElementById('nav-left-btn');
+    const rightBtn = document.getElementById('nav-right-btn');
+
+    if (navContainer && leftBtn && rightBtn) {
+      const updateButtons = () => {
+        // Desktop breakpoint check
+        if (window.innerWidth >= 1024) {
+          leftBtn.style.opacity = '0';
+          leftBtn.style.pointerEvents = 'none';
+          rightBtn.style.opacity = '0';
+          rightBtn.style.pointerEvents = 'none';
+        } else {
+          leftBtn.style.opacity = '1';
+          leftBtn.style.pointerEvents = 'auto';
+          rightBtn.style.opacity = '1';
+          rightBtn.style.pointerEvents = 'auto';
+        }
+      };
+
+      // Initial check and set default state
+      setTimeout(updateButtons, 100); // Check after render
+
+      // Listeners
+      navContainer.addEventListener('scroll', updateButtons, { passive: true });
+      window.addEventListener('resize', updateButtons, { passive: true });
+
+      // Click handlers
+      leftBtn.addEventListener('click', () => {
+        navContainer.scrollBy({ left: -200, behavior: 'smooth' });
+      });
+      
+      rightBtn.addEventListener('click', () => {
+        navContainer.scrollBy({ left: 200, behavior: 'smooth' });
+      });
+    }
+  };
+
+  // Run on page load and after Astro view transitions
+  setupNavScroll();
+  document.addEventListener('astro:page-load', setupNavScroll);
+</script>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (!prefersReducedMotion) {
+    // Hero reveal
+    gsap.fromTo(
+      ".js-menu-reveal",
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        delay: 0.2,
+      }
+    );
+
+    // Categories reveal
+    const categories = gsap.utils.toArray<HTMLElement>(".js-menu-category");
+
+    categories.forEach((section) => {
+      const cards = section.querySelectorAll<HTMLElement>(".js-menu-card");
+
+      gsap.fromTo(
+        cards,
+        { y: 30, opacity: 0 },
+        {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            once: true,
+          },
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+        }
+      );
+    });
+  } else {
+    document
+      .querySelectorAll(".js-menu-reveal, .js-menu-card")
+      .forEach((el) => {
+        el.classList.remove("opacity-0");
+      });
+  }
+</script>
+
+<style>
+  /* Utility for hiding scrollbar visually but keeping functionally */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+</style>
