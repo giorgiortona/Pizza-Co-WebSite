@@ -40,7 +40,7 @@ export default function ThemeToggle() {
     // Add cool logo or icon inside
     loader.innerHTML = `
       <img src="/logo.png" alt="Loading" class="w-16 h-16 rounded-full shadow-lg mb-6 animate-pulse" />
-      <div class="font-serif text-2xl tracking-widest font-bold uppercase transition-transform duration-[2s] scale-95" id="theme-transition-text">
+      <div class="font-serif text-2xl tracking-widest font-bold uppercase transition-transform duration-[2s] scale-95 text-center px-4 max-w-[90vw]" id="theme-transition-text">
         ${newTheme === 'dinner' ? t.wait : t.prep}
       </div>
     `;
@@ -76,6 +76,11 @@ export default function ThemeToggle() {
   if (!mounted) {
     return <div className="w-[116px] md:w-[140px] h-10 md:h-12"></div>;
   }
+
+  const currentLang = document.documentElement.lang as "it"|"en"|"fr";
+  const labelClass = currentLang === "fr" 
+    ? "text-[9px] sm:text-[10px] tracking-normal sm:tracking-wide font-bold uppercase" 
+    : "text-[10px] sm:text-xs tracking-wider sm:tracking-widest font-bold uppercase";
 
   return (
     <button
@@ -115,18 +120,18 @@ export default function ThemeToggle() {
       {/* Text labels */}
       <div className="relative z-10 flex w-full justify-between items-center px-[2px] pointer-events-none">
         <span
-          className={`flex-1 text-center text-[10px] sm:text-xs font-bold tracking-wider sm:tracking-widest uppercase transition-colors duration-700 ${
+          className={`flex-1 text-center transition-colors duration-700 ${labelClass} ${
             theme === "lunch" ? "text-transparent" : "text-brand-dark/40"
           }`}
         >
-          {tDict[document.documentElement.lang as "it"|"en"|"fr"]?.lunch || "Pranzo"}
+          {tDict[currentLang]?.lunch || "Pranzo"}
         </span>
         <span
-          className={`flex-1 text-center text-[10px] sm:text-xs font-bold tracking-wider sm:tracking-widest uppercase transition-colors duration-700 ${
+          className={`flex-1 text-center transition-colors duration-700 ${labelClass} ${
             theme === "lunch" ? "text-brand-dark/40" : "text-transparent"
           }`}
         >
-          {tDict[document.documentElement.lang as "it"|"en"|"fr"]?.dinner || "Cena"}
+          {tDict[currentLang]?.dinner || "Cena"}
         </span>
       </div>
     </button>

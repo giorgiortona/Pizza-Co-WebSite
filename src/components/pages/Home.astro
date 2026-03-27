@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import HeroSlider from "../HeroSlider.astro";
 import { site } from "../../data/site";
-import HomeSpecialtiesStack from "../HomeSpecialtiesStack";
+import HomeSpecialtiesWrapper from "../HomeSpecialtiesWrapper";
 import { getLangFromUrl, useTranslations, useTranslatedPath } from "../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
@@ -85,6 +85,28 @@ const specialties = [
     alt: "Pizza fritta artigianale",
   },
 ];
+
+const pizzaSpecialties = [
+  {
+    title: t('home.pizza.margherita.title'),
+    description: t('home.pizza.margherita.desc'),
+    image: "/images/hero/foto-2.jpg?v=2",
+    alt: "Pizza Margherita Classica",
+  },
+  {
+    title: t('home.pizza.ripiena.title'),
+    description: t('home.pizza.ripiena.desc'),
+    image: "/images/hero/foto-1.jpg?v=2",
+    alt: "Pizza Verace",
+  },
+  {
+    title: t('home.pizza.speciale.title'),
+    description: t('home.pizza.speciale.desc'),
+    image: "/images/hero/foto-4.jpg?v=2",
+    alt: "Pizza Speciale",
+  },
+];
+
 ---
 
 <BaseLayout title={site.name}>
@@ -178,14 +200,21 @@ const specialties = [
       </div>
     </section>
 
-    <!-- Specialties Stack Component -->
-    <HomeSpecialtiesStack 
-      items={specialties} 
-      labels={{
+    <!-- Specialties Wrapper Component -->
+    <HomeSpecialtiesWrapper 
+      lunchItems={specialties} 
+      lunchLabels={{
         subtitle: t('home.spec.subtitle'),
         title: t('home.spec.title'),
         desc: t('home.spec.desc'),
         btn: t('home.spec.btn')
+      }}
+      pizzaItems={pizzaSpecialties}
+      pizzaLabels={{
+        subtitle: t('home.pizza.subtitle'),
+        title: t('home.pizza.title'),
+        desc: t('home.pizza.desc'),
+        btn: t('home.pizza.btn')
       }}
       client:load 
     />
