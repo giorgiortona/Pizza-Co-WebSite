@@ -36,11 +36,11 @@ export default function HomeSpecialtiesStack({
           </p>
         </div>
 
-        <div className="relative flex flex-col pb-[20vh] md:pb-[60vh] lg:pb-[80vh]">
+        <div className="relative flex flex-col pb-12">
           {items.map((item, index) => (
             <article 
               key={item.title} 
-              className="md:sticky overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-brand-dark/10 bg-brand-card shadow-2xl mb-12 sm:mb-16 md:mb-[15vh] lg:mb-[25vh] transition-transform duration-500 ease-out"
+              className="md:sticky overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-brand-dark/10 bg-brand-card shadow-2xl mb-12 sm:mb-16 md:mb-[15vh] lg:mb-[25vh] last:!mb-0 transition-transform duration-500 ease-out"
               style={{
                 top: `calc(6rem + ${index * 1.5}rem)`,
                 zIndex: index

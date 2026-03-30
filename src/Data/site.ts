@@ -21,17 +21,17 @@ export const site = {
     facebookUrl: "https://www.facebook.com/PizzAndCoLecce",
     tiktokUrl: "https://www.tiktok.com/@pizzandco.98",
     openingHours: {
-        it: [
-            "Lunedì - Domenica",
-            "11:30 - 14:30 | 19:00 - 22:30"
-        ],
-        en: [
-            "Monday - Sunday",
-            "11:30 - 14:30 | 19:00 - 22:30"
-        ],
-        fr: [
-            "Lundi - Dimanche",
-            "11:30 - 14:30 | 19:00 - 22:30"
-        ],
-    } as Record<'it' | 'en' | 'fr', string[]>,
+        it: {
+            days: "Lunedì - Domenica",
+            hours: "11:30 - 14:30 | 19:00 - 22:30"
+        },
+        en: {
+            days: "Monday - Sunday",
+            hours: "11:30 - 14:30 | 19:00 - 22:30"
+        },
+        fr: {
+            days: "Lundi - Dimanche",
+            hours: "11:30 - 14:30 | 19:00 - 22:30"
+        },
+    } as Record<'it' | 'en' | 'fr', { days: string; hours: string }>,
 };

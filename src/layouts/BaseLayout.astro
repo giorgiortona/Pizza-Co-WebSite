@@ -194,12 +194,9 @@ const tPath = useTranslatedPath(lang);
               {t("footer.findus")}
             </h4>
             <p class="text-brand-dark/80 text-sm mb-2">{site.address}</p>
-            <div class="flex flex-col gap-1 text-sm text-brand-dark/80">
-              {
-                ((site.openingHours as any)[lang] || site.openingHours.it).map(
-                  (hour: string) => <p>{hour}</p>
-                )
-              }
+            <div class="flex flex-col gap-1 mt-4">
+              <span class="text-brand-red text-xs font-bold uppercase tracking-wider">{((site.openingHours as any)[lang] || site.openingHours.it).days}</span>
+              <span class="text-brand-dark/80 text-sm whitespace-pre-line">{((site.openingHours as any)[lang] || site.openingHours.it).hours.replace(' | ', '\n')}</span>
             </div>
           </div>
 

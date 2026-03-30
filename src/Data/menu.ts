@@ -13,7 +13,7 @@ export type MenuItem = {
   id: string;
   name: LocalizedString;
   description: LocalizedString;
-  price: number | { trancio: number; intera: number };
+  price: number | string | { trancio: number; intera: number };
   category: MenuCategory;
   icon?: string;
   image?: string;
@@ -235,88 +235,40 @@ export const menuItems: MenuItem[] = [
   {
     id: "coca-cola",
     name: "Coca-Cola",
-    description: structuredClone({ it: "Lattina 33cl", en: "Can 33cl", fr: "Canette 33cl" }),
-    price: 2.5,
-    category: "bevande",
-    modes: ["lunch", "dinner"],
-  },
-  {
-    id: "coca-cola",
-    name: "Coca-Cola",
-    description: structuredClone({ it: "Bottiglia 33cl", en: "Bottle 33cl", fr: "Bouteille 33cl" }),
-    price: 3,
+    description: structuredClone({ it: "Lattina 33cl / Bottiglia 33cl", en: "Can 33cl / Bottle 33cl", fr: "Canette 33cl / Bouteille 33cl" }),
+    price: "2.50 / 3.00",
     category: "bevande",
     modes: ["lunch", "dinner"],
   },
   {
     id: "fanta",
     name: "Fanta",
-    description: structuredClone({ it: "Lattina 33cl", en: "Can 33cl", fr: "Canette 33cl" }),
-    price: 2.5,
-    category: "bevande",
-    modes: ["lunch", "dinner"],
-  },
-  {
-    id: "fanta",
-    name: "Fanta",
-    description: structuredClone({ it: "Bottiglia 33cl", en: "Bottle 33cl", fr: "Bouteille 33cl" }),
-    price: 3,
+    description: structuredClone({ it: "Lattina 33cl / Bottiglia 33cl", en: "Can 33cl / Bottle 33cl", fr: "Canette 33cl / Bouteille 33cl" }),
+    price: "2.50 / 3.00",
     category: "bevande",
     modes: ["lunch", "dinner"],
   },
   {
     id: "sprite",
     name: "Sprite",
-    description: structuredClone({ it: "Lattina 33cl", en: "Can 33cl", fr: "Canette 33cl" }),
-    price: 2.5,
-    category: "bevande",
-    modes: ["lunch", "dinner"],
-  },
-  {
-    id: "sprite",
-    name: "Sprite",
-    description: structuredClone({ it: "Bottiglia 33cl", en: "Bottle 33cl", fr: "Bouteille 33cl" }),
-    price: 3,
-    category: "bevande",
-    modes: ["lunch", "dinner"],
-  },
-  {
-    id: "the_pesca",
-    name: structuredClone({ it: "Thè Pesca", en: "Peach Tea", fr: "Thé à la Pêche" }),
-    description: structuredClone({ it: "Lattina 33cl", en: "Can 33cl", fr: "Canette 33cl" }),
-    price: 3,
-    category: "bevande",
-    modes: ["lunch", "dinner"],
-  },
-  {
-    id: "the_limone",
-    name: structuredClone({ it: "Thè Limone", en: "Lemon Tea", fr: "Thé au Citron" }),
-    description: structuredClone({ it: "Lattina 33cl", en: "Can 33cl", fr: "Canette 33cl" }),
-    price: 3,
+    description: structuredClone({ it: "Lattina 33cl / Bottiglia 33cl", en: "Can 33cl / Bottle 33cl", fr: "Canette 33cl / Bouteille 33cl" }),
+    price: "2.50 / 3.00",
     category: "bevande",
     modes: ["lunch", "dinner"],
   },
   {
     id: "the",
-    name: structuredClone({ it: "Thè", en: "Tea", fr: "Thé" }),
-    description: structuredClone({ it: "Bottiglia 33cl", en: "Bottle 33cl", fr: "Bouteille 33cl" }),
-    price: 4,
+    name: structuredClone({ it: "Thè Pesca o Limone", en: "Peach or Lemon Tea", fr: "Thé Pêche ou Citron" }),
+    description: structuredClone({ it: "Lattina 33cl / Bottiglia 33cl", en: "Can 33cl / Bottle 33cl", fr: "Canette 33cl / Bouteille 33cl" }),
+    price: "3.00 / 4.00",
     category: "bevande",
     modes: ["lunch", "dinner"],
   },
   {
     id: "chinotto",
     name: "Chinotto",
-    description: structuredClone({ it: "Lattina 33cl", en: "Can 33cl", fr: "Canette 33cl" }),
-    price: 2.5,
-    category: "bevande",
-    modes: ["lunch", "dinner"],
-  },
-  {
-    id: "chinotto",
-    name: "Chinotto",
-    description: structuredClone({ it: "Bottiglia", en: "Bottle", fr: "Bouteille" }),
-    price: 3.5,
+    description: structuredClone({ it: "Lattina 33cl / Bottiglia", en: "Can 33cl / Bottle", fr: "Canette 33cl / Bouteille" }),
+    price: "2.50 / 3.50",
     category: "bevande",
     modes: ["lunch", "dinner"],
   },

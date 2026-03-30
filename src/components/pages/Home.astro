@@ -185,16 +185,17 @@ const pizzaSpecialties = [
             </div>
           </div>
 
-          <div class="pt-6 border-t border-brand-red/10">
+          <div class="pt-6 border-t border-brand-red/10 mt-6">
             <h3 class="font-serif text-xl text-brand-dark mb-4">{t('home.info.hours')}</h3>
-            <ul class="space-y-3">
-              {((site.openingHours as any)[lang] || site.openingHours.it).map((h: string) => (
-                <li class="flex items-start">
-                  <span class="text-brand-red mr-3 mt-1 text-xs">◆</span>
-                  <span class="text-brand-dark/80 font-medium">{h}</span>
-                </li>
-              ))}
-            </ul>
+            <div class="bg-brand-card/50 rounded-2xl p-5 border border-brand-dark/5 shadow-sm">
+              <div class="flex flex-col gap-1">
+                <span class="text-brand-red font-bold uppercase tracking-wider text-[11px] mb-1">{((site.openingHours as any)[lang] || site.openingHours.it).days}</span>
+                <span class="text-brand-dark font-medium text-lg leading-relaxed">
+                  {((site.openingHours as any)[lang] || site.openingHours.it).hours.split(' | ')[0]} <br/>
+                  {((site.openingHours as any)[lang] || site.openingHours.it).hours.split(' | ')[1]}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
