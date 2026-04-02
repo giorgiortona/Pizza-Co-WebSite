@@ -75,7 +75,7 @@ const categories = [
   <div class="mx-auto max-w-7xl px-4 py-24 sm:py-32">
     <div class="flex flex-col lg:flex-row gap-12 items-start relative">
       <!-- Sticky Navigation (Desktop: Sidebar, Mobile: Top) -->
-      <div id="category-nav" class="sticky top-28 md:top-32 z-30 w-full px-4 flex justify-center lg:justify-start lg:w-72 lg:px-0 shrink-0 pointer-events-none mb-8 lg:mb-0 transition-transform duration-300">
+      <div id="category-nav" class="sticky top-28 md:top-32 z-30 w-full px-4 flex justify-center lg:justify-start lg:w-72 lg:px-0 shrink-0 pointer-events-none mb-8 lg:mb-0 transition-all duration-500 ease-in-out">
         <div class="pointer-events-auto relative flex items-center mx-auto py-1.5 px-1.5 w-full sm:w-max max-w-full bg-brand-cream/70 backdrop-blur-xl border border-brand-dark/10 rounded-full shadow-lg lg:w-full lg:bg-transparent lg:backdrop-blur-none lg:border-none lg:rounded-none lg:shadow-none lg:p-0 transition-colors duration-500">
           
           <button id="nav-left-btn" aria-label="Scroll left" class="lg:hidden flex-shrink-0 w-8 h-8 absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-brand-card shadow-sm text-brand-dark hover:text-brand-red transition-all z-20">
@@ -121,13 +121,13 @@ const categories = [
             return (
               <section id={category} class="scroll-mt-40 js-menu-category">
                 <div class="mb-12 text-center lg:text-left">
-                  <h2 class="text-5xl font-serif text-brand-dark mb-6 flex items-center gap-4 lg:justify-start justify-center">
-                    {categoryLabels[category]}
+                  <h2 class="text-5xl font-serif text-brand-dark mb-6 flex flex-col md:flex-row items-center gap-4 lg:justify-start justify-center text-center md:text-left">
+                    <span>{categoryLabels[category]}</span>
                     {category === "birre-artigianali" && (
                       <img
                         src="/icons/Birra-Salento-logo.png"
                         alt="Birra Salento"
-                        class="h-16 md:h-20 w-auto object-contain mix-blend-multiply"
+                        class="h-16 md:h-20 w-auto object-contain mix-blend-multiply night-sticker-fix"
                       />
                     )}
                   </h2>
@@ -179,8 +179,8 @@ const categories = [
                                   alt=""
                                   class={`object-contain mix-blend-multiply shadow-sm ${
                                     item.icon.includes("gassosa")
-                                      ? "w-12 h-14 md:w-14 md:h-16 rounded-md"
-                                      : "w-7 h-7 rounded-full border border-brand-dark/10"
+                                      ? "w-12 h-14 md:w-14 md:h-16 rounded-md night-sticker-fix"
+                                      : "w-7 h-7 rounded-full border border-brand-dark/10 night-icon-fix"
                                   }`}
                                 />
                               )}
@@ -261,6 +261,20 @@ const categories = [
   [data-theme="dinner"] .menu-title-dinner {
     display: inline !important;
   }
+  
+  /* Fix per iconcine/stickers scuri nella modalità notte */
+  [data-theme="dinner"] .night-sticker-fix {
+    mix-blend-mode: normal !important;
+    background-color: #FAF7F2 !important; /* Colore crema chiaro del tema per mantenere l'estetica */
+    padding: 0.35rem !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+  }
+  
+  [data-theme="dinner"] .night-icon-fix {
+    mix-blend-mode: normal !important;
+    background-color: #FAF7F2 !important;
+  }
 </style>
 
 <script>
@@ -334,29 +348,35 @@ const categories = [
       }
     );
 
-    // Categories reveal
-    const categories = gsap.utils.toArray<HTMLElement>(".js-menu-category");
-
-    categories.forEach((section) => {
-      const cards = section.querySelectorAll<HTMLElement>(".js-menu-card");
-
-      gsap.fromTo(
-        cards,
-        { y: 30, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%",
-            once: true,
-          },
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power2.out",
+    // Categories reveal usando IntersectionObserver (più robusto per i salti con anchor link)
+    const categories = document.querySelectorAll(".js-menu-category");
+    
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const section = entry.target;
+          const cards = section.querySelectorAll(".js-menu-card");
+          
+          gsap.fromTo(
+            cards,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: "power2.out"
+            }
+          );
+          
+          obs.unobserve(section);
         }
-      );
+      });
+    }, {
+      rootMargin: "0px 0px -15% 0px" // Equivalente a top 85%
     });
+
+    categories.forEach(section => observer.observe(section));
   } else {
     document
       .querySelectorAll(".js-menu-reveal, .js-menu-card")

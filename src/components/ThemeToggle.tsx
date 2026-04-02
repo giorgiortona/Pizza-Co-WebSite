@@ -12,15 +12,19 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    // Read from localStorage or default to lunch
-    const storedTheme = localStorage.getItem("pizza_theme") as "lunch" | "dinner";
-    if (storedTheme === "dinner") {
-      setTheme("dinner");
-      document.documentElement.setAttribute("data-theme", "dinner");
-    } else {
-      setTheme("lunch");
-      document.documentElement.setAttribute("data-theme", "lunch");
+    // Rimuoviamo il vecchio localStorage per evitare conflitti
+    if (localStorage.getItem("pizza_theme")) {
+      localStorage.removeItem("pizza_theme");
     }
+
+    let currentTheme = sessionStorage.getItem("pizza_theme") as "lunch" | "dinner" | null;
+    if (!currentTheme) {
+      const hour = new Date().getHours();
+      currentTheme = (hour >= 7 && hour < 17) ? "lunch" : "dinner";
+    }
+
+    setTheme(currentTheme);
+    document.documentElement.setAttribute("data-theme", currentTheme);
   }, []);
 
   const toggleTheme = () => {
@@ -56,7 +60,7 @@ export default function ThemeToggle() {
       setTimeout(() => {
         // Change logic under the hood
         setTheme(newTheme);
-        localStorage.setItem("pizza_theme", newTheme);
+        sessionStorage.setItem("pizza_theme", newTheme);
         document.documentElement.setAttribute("data-theme", newTheme);
         window.dispatchEvent(new CustomEvent("theme-toggled", { detail: newTheme }));
 
@@ -79,8 +83,8 @@ export default function ThemeToggle() {
 
   const currentLang = document.documentElement.lang as "it"|"en"|"fr";
   const labelClass = currentLang === "fr" 
-    ? "text-[9px] sm:text-[10px] tracking-normal sm:tracking-wide font-bold uppercase" 
-    : "text-[10px] sm:text-xs tracking-wider sm:tracking-widest font-bold uppercase";
+    ? "text-[8px] sm:text-[9px] tracking-tight sm:tracking-normal font-bold uppercase" 
+    : "text-[9px] sm:text-[10px] tracking-normal sm:tracking-wide font-bold uppercase";
 
   return (
     <button
@@ -97,38 +101,28 @@ export default function ThemeToggle() {
     >
       {/* Background slider pill / The glowing Thumb */}
       <div
-        className={`absolute top-1 bottom-1 w-[53px] md:w-[66px] rounded-full transition-all duration-700 ease-[cubic-bezier(0.87,0,0.13,1)] shadow-md flex items-center justify-center
+        className={`absolute top-1 bottom-1 w-[53px] md:w-[66px] rounded-[18px] transition-all duration-700 ease-[cubic-bezier(0.87,0,0.13,1)] shadow-md flex items-center justify-center
           ${
             theme === "lunch"
-              ? "left-1 bg-brand-card shadow-[0_2px_10px_rgba(0,0,0,0.1)]"
+              ? "left-1 bg-brand-card shadow-[0_2px_10px_rgba(0,0,0,0.15)]"
               : "left-[59px] md:left-[69px] bg-gradient-to-tr from-brand-red-light to-brand-red shadow-[0_0_15px_rgba(225,29,72,0.4)]"
           }
         `}
       >
-        {/* Thumb Icon */}
-        {theme === "lunch" ? (
-          <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-        ) : (
-          <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        )}
       </div>
 
       {/* Text labels */}
       <div className="relative z-10 flex w-full justify-between items-center px-[2px] pointer-events-none">
         <span
-          className={`flex-1 text-center transition-colors duration-700 ${labelClass} ${
-            theme === "lunch" ? "text-transparent" : "text-brand-dark/40"
+          className={`flex-1 truncate px-1 text-center transition-colors duration-700 ${labelClass} ${
+            theme === "lunch" ? "text-brand-dark" : "text-white/40"
           }`}
         >
           {tDict[currentLang]?.lunch || "Pranzo"}
         </span>
         <span
-          className={`flex-1 text-center transition-colors duration-700 ${labelClass} ${
-            theme === "lunch" ? "text-brand-dark/40" : "text-transparent"
+          className={`flex-1 truncate px-1 text-center transition-colors duration-700 ${labelClass} ${
+            theme === "lunch" ? "text-brand-dark/40" : "text-white"
           }`}
         >
           {tDict[currentLang]?.dinner || "Cena"}

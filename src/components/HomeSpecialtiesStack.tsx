@@ -1,4 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type Specialty = {
   title: string;
@@ -21,10 +27,63 @@ export default function HomeSpecialtiesStack({
   items,
   labels,
 }: HomeSpecialtiesStackProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsWrapperRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLElement | null)[]>([]);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      let mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        const cards = cardsRef.current.filter(Boolean) as HTMLElement[];
+        if (cards.length === 0) return;
+
+        // Inizialmente mandiamo tutte le card (tranne la prima) molto in basso (fuori schermo)
+        gsap.set(cards.slice(1), { y: "150vh" });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: cardsWrapperRef.current,
+            start: "center center", // Fissa esattamente a metà schermo
+            end: `+=${cards.length * 75}%`, // Scorrevolezza maggiore riducendo l'area di pin
+            pin: true,
+            scrub: 0.5, // Scrub più reattivo per sembrare più fluido
+          }
+        });
+
+        // Creiamo dinamicamente l'animazione d'ingresso della pila
+        cards.forEach((card, index) => {
+          if (index === 0) return; // La card 0 non fa nulla, è già pronta.
+
+          const previousCards = cards.slice(0, index);
+
+          // La carta corrente sale verso l'alto (nella sua posizione assoluta)
+          tl.to(card, {
+            y: 0,
+            duration: 1,
+            ease: "none"
+          })
+          // ...e simultaneamente le carte sotto si rimpiccioliscono e scuriscono
+          .to(previousCards, {
+            scale: (i) => 1 - ((index - i) * 0.04), // Riduzione scalare morbida
+            y: (i) => -((index - i) * 15),          // Micro spostamento in alto per il senso di stacking
+            opacity: (i) => 1 - ((index - i) * 0.25), // Dim the ones further back
+            duration: 1,
+            ease: "none"
+          }, "<");
+        });
+
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [items]);
+
   return (
-    <section className="specialita-section py-20 lg:py-32 relative z-10">
+    <section className="specialita-section py-16 md:py-24 relative z-10 bg-brand-cream" ref={sectionRef}>
       <div className="mx-auto max-w-6xl px-6">
-        <div className="mb-12 md:mb-24 max-w-2xl">
+        <div className="mb-12 md:mb-16 max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-red">
             {labels.subtitle}
           </p>
@@ -36,18 +95,21 @@ export default function HomeSpecialtiesStack({
           </p>
         </div>
 
-        <div className="relative flex flex-col pb-12">
+        {/* 
+          Wrapper: su mobile flex in colonna naturale, su desktop un blocco unico e ben calcolato per il layering 
+        */}
+        <div className="relative flex flex-col md:block md:h-[450px] lg:h-[500px] w-full" ref={cardsWrapperRef}>
           {items.map((item, index) => (
             <article 
               key={item.title} 
-              className="md:sticky overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-brand-dark/10 bg-brand-card shadow-2xl mb-12 sm:mb-16 md:mb-[15vh] lg:mb-[25vh] last:!mb-0 transition-transform duration-500 ease-out"
+              ref={el => { cardsRef.current[index] = el; }}
+              className="relative md:absolute top-0 left-0 w-full mb-12 sm:mb-16 md:mb-0 md:h-[450px] lg:h-[500px] overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-brand-dark/10 bg-brand-card shadow-2xl transition-shadow origin-top"
               style={{
-                top: `calc(6rem + ${index * 1.5}rem)`,
                 zIndex: index
               }}
             >
-              <div className="grid md:grid-cols-2">
-                <div className="relative min-h-[300px] md:min-h-[450px] overflow-hidden group">
+              <div className="grid md:grid-cols-2 h-full">
+                <div className="relative min-h-[300px] md:min-h-full overflow-hidden group">
                   <img
                     src={item.image}
                     alt={item.alt}
@@ -55,7 +117,7 @@ export default function HomeSpecialtiesStack({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent md:hidden pointer-events-none"></div>
                 </div>
-                <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-16 relative bg-brand-card">
+                <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-16 relative bg-brand-card h-full">
                   <div>
                     <p className="text-sm font-semibold uppercase tracking-[0.22em] text-brand-red">
                       0{index + 1}

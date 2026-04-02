@@ -8,6 +8,10 @@ export const GET: APIRoute = async () => {
 
   const res = await fetch(url);
   const data = await res.json();
+  
+  if (data.result) {
+    data.result.place_id = placeId;
+  }
 
   return new Response(JSON.stringify(data), {
     headers: {

@@ -97,16 +97,18 @@ export default function HomePizzaSection({
                   alt={item.alt}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#09090b]/90 via-[#09090b]/30 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#09090b]/90 via-[#09090b]/30 to-transparent opacity-90 lg:opacity-70 lg:group-hover:opacity-90 transition-opacity duration-500"></div>
                 
-                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
-                  <h3 className="text-2xl sm:text-3xl font-serif text-[#fafaf9] mb-3 drop-shadow-md group-hover:text-brand-gold transition-colors duration-300">
+                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 flex flex-col justify-end">
+                  <h3 className="text-2xl sm:text-3xl font-serif text-[#fafaf9] drop-shadow-md lg:group-hover:text-brand-gold transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <div className="overflow-hidden">
-                    <p className="text-[#fafaf9]/80 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                      {item.description}
-                    </p>
+                  <div className="grid grid-rows-[1fr] lg:grid-rows-[0fr] lg:group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                    <div className="overflow-hidden">
+                      <p className="pt-3 text-[#fafaf9]/80 text-sm leading-relaxed opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transform translate-y-0 lg:translate-y-4 lg:group-hover:translate-y-0 transition-all duration-500 lg:delay-100">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

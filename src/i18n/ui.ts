@@ -22,7 +22,7 @@ export const ui = {
 
     'home.id.title': 'Identità',
     'home.id.heading': 'Il gusto della condivisione: grandi pizze formato famiglia e tranci appena sfornati.',
-    'home.id.desc1': 'Sforniamo ininterrottamente maestose pizze in formato famiglia che serviamo al trancio, garantendo un impasto sempre fragrante e leggero. Ad accoglierti troverai un ricco bancone colmo di specialità calde pronte per essere gustate, pensate per chi non vuole rinunciare all’autenticità.',
+    'home.id.desc1': 'Sforniamo ogni giorno pizze servite al trancio garantendo sempre un impasto leggero e fragrante con ingredienti di alta qualità.',
     'home.id.btn_story': 'La Nostra Storia',
     'home.id.btn_menu': 'Vai al Menù',
 
@@ -39,6 +39,7 @@ export const ui = {
     'home.rev.based': 'Basato su',
     'home.rev.reviews': 'recensioni',
     'home.rev.readall': 'Leggi tutte le recensioni',
+    'home.rev.write': 'Scrivi una recensione',
 
     'home.cta.title': 'Ti Aspettiamo',
     'home.cta.heading': "Pronto a vivere un'esperienza di gusto autentica?",
@@ -60,14 +61,14 @@ export const ui = {
 
     'home.pizza.subtitle': 'La Regina',
     'home.pizza.title': 'Sua Maestà la Pizza',
-    'home.pizza.desc': 'A cena lo spettacolo prende vita. Preparate con un impasto a lunga lievitazione e ingredienti selezionati, le nostre pizze sono un trionfo di gusto, leggerezza e tradizione. Esplora le anime della nostra regina.',
+    'home.pizza.desc': 'Le nostre pizze, preparate con impasto a lunga lievitazione e ingredienti scelti, sono leggere, gustose e fatte come si deve. Scopri tutte le fasi della preparazione del nostro prodotto più amato.',
     'home.pizza.btn': 'Scopri le Pizze',
-    'home.pizza.margherita.title': 'La Classica',
-    'home.pizza.margherita.desc': 'Semplicità che conquista: pomodoro San Marzano, fiordilatte fresco e basilico.',
-    'home.pizza.ripiena.title': 'La Verace',
-    'home.pizza.ripiena.desc': 'Cornicione alto, alveolatura perfetta e sapori autentici per un\'esperienza indimenticabile.',
-    'home.pizza.speciale.title': 'Le Speciali',
-    'home.pizza.speciale.desc': 'Abbinamenti audaci e ingredienti premium per chi ama osare con classe.',
+    'home.pizza.impasto.title': 'L\'impasto',
+    'home.pizza.impasto.desc': 'Il nostro impasto nasce da lievito madre vivo e da una lenta lievitazione di 24–48 ore. Questo processo dona alla pizza leggerezza, alta digeribilità e un gusto autentico, con una consistenza fragrante.',
+    'home.pizza.materie.title': 'Le materie prime',
+    'home.pizza.materie.desc': 'Selezioniamo con cura le nostre materie prime, privilegiando ingredienti freschi e di qualità. Dalla farina ai condimenti, scegliamo solo prodotti che rispettano la tradizione e valorizzano ogni pizza, per garantire gusto autentico e genuinità in ogni morso.',
+    'home.pizza.cottura.title': 'La cottura',
+    'home.pizza.cottura.desc': 'La cottura avviene nel nostro forno a nastro, che garantisce temperatura costante e risultati sempre uniformi. Questo ci permette di ottenere una pizza ben cotta, fragrante e bilanciata, mantenendo intatti gusto e qualità ad ogni servizio.',
 
     'storia.hero.subtitle': 'Radici e Passione',
     'storia.hero.title': 'La Nostra Storia',
@@ -75,8 +76,8 @@ export const ui = {
     'storia.s1.title': 'Chi siamo',
     'storia.s1.p1': 'Nasce nel 1998, idea di due fratelli Napoletani che decidono di "emigrare" a Sud, innamorati "de lu mare, lu sole e lu ientu". Il centro storico di Lecce li accoglie con il fermento di una città che sta per diventare una delle mete turistiche più importanti d\'Italia. La filosofia che contraddistingue fin da subito l\'attività è quella di offrire street food di altissima qualità, ingredienti semplici e locali e un attenzione maniacale per le lievitazioni. Tante cose sono cambiate nel corso degli anni ma l\'unica costante che accompagna ogni giorno la famiglia Ortona è l\'amore per il proprio lavoro, e il rispetto e l\'accoglienza per chi chiunque voglia assaggiare un po\' di Napoli nel Salento!',
     'storia.s1.p2': '',
-    'storia.s2.title1': 'La nostra',
-    'storia.s2.title2': 'Filosofia',
+    'storia.s2.title1': 'Pizza&Co...',
+    'storia.s2.title2': "Rint 'o Core",
     'storia.s2.p1': `Stasera oi nè  
 Toglite nu sfizio  
 Vatt' a magna' na pizza  
@@ -166,7 +167,7 @@ Puortate sti delizie rint
 
     'home.id.title': 'Identity',
     'home.id.heading': 'The joy of sharing: large family-sized pizzas and freshly baked slices.',
-    'home.id.desc1': 'We continuously bake majestic family-sized pizzas served by the slice, guaranteeing a consistently fragrant and light crust. Welcoming you is a rich counter full of hot specialties ready to be enjoyed, designed for those who never compromise on authenticity.',
+    'home.id.desc1': 'We bake pizzas served by the slice every day, always guaranteeing a light and fragrant crust with high-quality ingredients.',
     'home.id.btn_story': 'Our Story',
     'home.id.btn_menu': 'Go to Menu',
 
@@ -183,6 +184,7 @@ Puortate sti delizie rint
     'home.rev.based': 'Based on',
     'home.rev.reviews': 'reviews',
     'home.rev.readall': 'Read all reviews',
+    'home.rev.write': 'Write a review',
 
     'home.cta.title': 'We wait for you',
     'home.cta.heading': "Ready for an authentic taste experience?",
@@ -204,14 +206,14 @@ Puortate sti delizie rint
 
     'home.pizza.subtitle': 'The Queen',
     'home.pizza.title': 'Her Majesty the Pizza',
-    'home.pizza.desc': 'At dinner, the show comes alive. Prepared with long-leavened dough and selected ingredients, our pizzas are a triumph of taste, lightness, and tradition. Explore the souls of our queen.',
+    'home.pizza.desc': 'Our pizzas, prepared with long-leavened dough and selected ingredients, are light, tasty, and properly made. Discover all the stages of preparation of our most beloved product.',
     'home.pizza.btn': 'Discover Pizzas',
-    'home.pizza.margherita.title': 'The Classic',
-    'home.pizza.margherita.desc': 'Simplicity that conquers: San Marzano tomato, fresh fiordilatte, and basil.',
-    'home.pizza.ripiena.title': 'The Authentic',
-    'home.pizza.ripiena.desc': 'High crust, perfect alveolation, and authentic flavors for an unforgettable experience.',
-    'home.pizza.speciale.title': 'The Specials',
-    'home.pizza.speciale.desc': 'Bold combinations and premium ingredients for those who dare with class.',
+    'home.pizza.impasto.title': 'The Dough',
+    'home.pizza.impasto.desc': 'Our dough is born from alive sourdough and a slow leavening of 24–48 hours. This process gives the pizza lightness, high digestibility and an authentic taste, with a fragrant texture.',
+    'home.pizza.materie.title': 'Quality Ingredients',
+    'home.pizza.materie.desc': 'We carefully select our raw materials, favoring fresh and quality ingredients. From flour to toppings, we choose only products that respect tradition and enhance every pizza, guaranteeing authentic taste and genuineness in every bite.',
+    'home.pizza.cottura.title': 'The Baking',
+    'home.pizza.cottura.desc': 'Baking takes place in our conveyor oven, which guarantees a constant temperature and always uniform results. This allows us to obtain a well-cooked, fragrant and balanced pizza, keeping taste and quality intact at every service.',
 
     'storia.hero.subtitle': 'Roots and Passion',
     'storia.hero.title': 'Our Story',
@@ -219,8 +221,8 @@ Puortate sti delizie rint
     'storia.s1.title': 'Who we are',
     'storia.s1.p1': 'Born in 1998, the idea of two Neapolitan brothers who decided to "emigrate" to the South, in love with "the sea, the sun, and the wind". The historic center of Lecce welcomes them with the excitement of a city about to become one of Italy\'s most important tourist destinations. The philosophy that immediately sets the business apart is to offer high-quality street food, simple and local ingredients, and obsessive attention to leavening. Many things have changed over the years, but the only constant that accompanies the Ortona family every day is the love for their work, and the respect and welcoming for anyone who wants to taste a bit of Naples in Salento!',
     'storia.s1.p2': '',
-    'storia.s2.title1': 'Our',
-    'storia.s2.title2': 'Philosophy',
+    'storia.s2.title1': 'Pizza&Co...',
+    'storia.s2.title2': "Rint 'o Core",
     'storia.s2.p1': `Stasera oi nè  
 Toglite nu sfizio  
 Vatt' a magna' na pizza  
@@ -311,7 +313,7 @@ Puortate sti delizie rint
 
     'home.id.title': 'Identité',
     'home.id.heading': 'Le plaisir de partager : de grandes pizzas au format familial et des parts fraîchement cuites.',
-    'home.id.desc1': 'Nous préparons continuellement de majestueuses pizzas au format familial servies à la part, garantissant une pâte toujours parfumée et légère. Pour vous accueillir, un comptoir généreux garni de spécialités chaudes prêtes à être dégustées, conçu pour ceux qui ne renoncent jamais à l’authenticité.',
+    'home.id.desc1': 'Nous préparons chaque jour des pizzas servies à la part, en garantissant toujours une pâte légère et parfumée avec des ingrédients de haute qualité.',
     'home.id.btn_story': 'Notre Histoire',
     'home.id.btn_menu': 'Voir le Menu',
 
@@ -328,6 +330,7 @@ Puortate sti delizie rint
     'home.rev.based': 'Basé sur',
     'home.rev.reviews': 'avis',
     'home.rev.readall': 'Lire tous les avis',
+    'home.rev.write': 'Écrire un avis',
 
     'home.cta.title': 'Nous vous attendons',
     'home.cta.heading': "Prêt pour une expérience gustative authentique ?",
@@ -349,14 +352,14 @@ Puortate sti delizie rint
 
     'home.pizza.subtitle': 'La Reine',
     'home.pizza.title': 'Sa Majesté la Pizza',
-    'home.pizza.desc': 'Au dîner, le spectacle prend vie. Préparées avec une pâte à longue levée et des ingrédients de choix, nos pizzas sont un triomphe de goût, de légèreté et de tradition. Explorez les âmes de notre reine.',
+    'home.pizza.desc': "Nos pizzas, préparées avec une pâte à longue levée et des ingrédients de choix, sont légères, savoureuses et faites dans les règles de l'art. Découvrez toutes les étapes de la préparation de notre produit le plus apprécié.",
     'home.pizza.btn': 'Découvrir les Pizzas',
-    'home.pizza.margherita.title': 'La Classique',
-    'home.pizza.margherita.desc': 'La simplicité qui conquiert : tomate San Marzano, fiordilatte frais et basilic.',
-    'home.pizza.ripiena.title': 'L\'Authentique',
-    'home.pizza.ripiena.desc': 'Croûte haute, alvéolation parfaite et saveurs authentiques pour une expérience inoubliable.',
-    'home.pizza.speciale.title': 'Les Spéciales',
-    'home.pizza.speciale.desc': 'Des combinaisons audacieuses et des ingrédients de première qualité pour ceux qui osent avec classe.',
+    'home.pizza.impasto.title': 'La Pâte',
+    'home.pizza.impasto.desc': "Notre pâte est née de levain vivant et d'une lente levée de 24 à 48 heures. Ce processus donne à la pizza légèreté, haute digestibilité et un goût authentique, avec une texture croustillante.",
+    'home.pizza.materie.title': 'Les Ingrédients',
+    'home.pizza.materie.desc': "Nous sélectionnons soigneusement nos matières premières, en privilégiant des ingrédients frais et de qualité. De la farine aux garnitures, nous choisissons uniquement des produits qui respectent la tradition et mettent en valeur chaque pizza, garantissant un goût authentique et naturel à chaque bouchée.",
+    'home.pizza.cottura.title': 'La Cuisson',
+    'home.pizza.cottura.desc': "La cuisson se fait dans notre four à convoyeur, qui garantit une température constante et des résultats toujours uniformes. Cela nous permet d'obtenir une pizza bien cuite, parfumée et équilibrée, en gardant le goût et la qualité intacts à chaque service.",
 
     'storia.hero.subtitle': 'Racines et Passion',
     'storia.hero.title': 'Notre Histoire',
@@ -364,8 +367,8 @@ Puortate sti delizie rint
     'storia.s1.title': 'Qui sommes-nous',
     'storia.s1.p1': 'Née en 1998, de l\'idée de deux frères napolitains qui décident d\'"émigrer" vers le Sud, amoureux "de la mer, du soleil et du vent". Le centre historique de Lecce les accueille avec l\'effervescence d\'une ville sur le point de devenir l\'une des destinations touristiques les plus importantes d\'Italie. La philosophie qui distingue immédiatement l\'activité consiste à proposer une cuisine de rue de la plus haute qualité, des ingrédients simples et locaux, et une attention obsessionnelle aux levages. Beaucoup de choses ont changé au fil des ans, mais la seule constante qui accompagne la famille Ortona chaque jour est l\'amour de son métier, ainsi que le respect et l\'accueil de quiconque souhaite goûter un peu de Naples dans le Salento!',
     'storia.s1.p2': '',
-    'storia.s2.title1': 'Notre',
-    'storia.s2.title2': 'Philosophie',
+    'storia.s2.title1': 'Pizza&Co...',
+    'storia.s2.title2': "Rint 'o Core",
     'storia.s2.p1': `Stasera oi nè  
 Toglite nu sfizio  
 Vatt' a magna' na pizza  

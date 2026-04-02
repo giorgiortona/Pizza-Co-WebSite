@@ -283,7 +283,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "limonata",
     name: "Limonata Artigianale Chiurazzi",
-    description: structuredClone({ it: "Bottiglia", en: "Bottle", fr: "Bouteille" }),
+    description: structuredClone({ it: "Bottiglia in vetro", en: "Glass bottle", fr: "Bouteille en verre" }),
     price: 6,
     category: "bevande",
     modes: ["lunch", "dinner"],
@@ -292,7 +292,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "aranciata",
     name: "Aranciata Artigianale Chiurazzi",
-    description: structuredClone({ it: "Bottiglia", en: "Bottle", fr: "Bouteille" }),
+    description: structuredClone({ it: "Bottiglia in vetro", en: "Glass bottle", fr: "Bouteille en verre" }),
     price: 6,
     category: "bevande",
     modes: ["lunch", "dinner"],
@@ -301,7 +301,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "gassosa",
     name: "Gassosa Artigianale Chiurazzi",
-    description: structuredClone({ it: "Bottiglia", en: "Bottle", fr: "Bouteille" }),
+    description: structuredClone({ it: "Bottiglia in vetro", en: "Glass bottle", fr: "Bouteille en verre" }),
     price: 6,
     category: "bevande",
     modes: ["lunch", "dinner"],
@@ -327,7 +327,7 @@ export const menuItems: MenuItem[] = [
     id: "nastro_azzurro",
     name: "Nastro Azzurro",
     description: structuredClone({ it: "Birra chiara 33cl", en: "Lager beer 33cl", fr: "Bière blonde 33cl" }),
-    price: 3.5,
+    price: 4,
     category: "birre",
     modes: ["lunch", "dinner"],
   },
@@ -348,8 +348,8 @@ export const menuItems: MenuItem[] = [
     modes: ["lunch", "dinner"],
   },
   {
-    id: "tennens",
-    name: "Tennens",
+    id: "tennents",
+    name: "Tennent's",
     description: structuredClone({ it: "Birra chiara 33cl", en: "Lager beer 33cl", fr: "Bière blonde 33cl" }),
     price: 4.5,
     category: "birre",

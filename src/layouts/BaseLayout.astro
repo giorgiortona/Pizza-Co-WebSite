@@ -21,12 +21,19 @@ const tPath = useTranslatedPath(lang);
   <head>
     <meta charset="utf-8" />
     <script is:inline>
-      const storedTheme = localStorage.getItem("pizza_theme");
-      if (storedTheme === "dinner") {
-        document.documentElement.setAttribute("data-theme", "dinner");
-      } else {
-        document.documentElement.setAttribute("data-theme", "lunch");
+      // Rimuoviamo il vecchio localStorage per evitare conflitti
+      if (localStorage.getItem("pizza_theme")) {
+        localStorage.removeItem("pizza_theme");
       }
+      
+      let theme = sessionStorage.getItem("pizza_theme");
+      if (!theme) {
+        // Logica orario: dalle 07:00 alle 16:59 è "lunch" (pranzo), dalle 17:00 alle 06:59 è "dinner" (cena)
+        const hour = new Date().getHours();
+        theme = (hour >= 7 && hour < 17) ? "lunch" : "dinner";
+      }
+      
+      document.documentElement.setAttribute("data-theme", theme);
     </script>
 
     <meta
@@ -52,7 +59,7 @@ const tPath = useTranslatedPath(lang);
     <!-- Header with GSAP Auto-hide on scroll -->
     <header
       id="main-header"
-      class="fixed top-0 left-0 w-full z-50 px-4 py-4 transition-transform duration-500 ease-out"
+      class="fixed top-0 left-0 w-full z-50 px-4 py-4 transition-transform duration-500 ease-in-out"
     >
       <div class="mx-auto max-w-6xl">
         <div
@@ -122,6 +129,13 @@ const tPath = useTranslatedPath(lang);
 
     <!-- Fullscreen Mobile Menu Overlay -->
     <div id="mobile-menu-overlay" class="fixed inset-0 z-[55] bg-brand-cream/95 backdrop-blur-md flex flex-col justify-center items-center px-6" style="display: none;">
+      <!-- Pulsante di chiusura (X) -->
+      <button id="mobile-menu-close-btn" class="absolute top-6 right-6 p-2 text-brand-dark hover:text-brand-red transition-transform duration-300 hover:scale-110 z-[60]" aria-label="Chiudi menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
       <nav class="flex flex-col items-center gap-6 w-full max-w-sm mt-8">
         {
           [
@@ -277,6 +291,12 @@ const tPath = useTranslatedPath(lang);
         
         window.addEventListener("scroll", () => {
           let currentScroll = window.scrollY;
+          
+          // Riduciamo la sensibilità: ignora i micromovimenti (< 40px) per non far apparire/scomparire l'header per sbaglio
+          if (Math.abs(currentScroll - lastScrollY) < 40 && currentScroll > 50) {
+            return;
+          }
+          
           let direction = currentScroll > lastScrollY ? 1 : -1;
           lastScrollY = currentScroll;
           
@@ -314,6 +334,7 @@ const tPath = useTranslatedPath(lang);
       // Mobile Menu Logic
       const mobileBtn = document.getElementById("mobile-menu-btn");
       const overlay = document.getElementById("mobile-menu-overlay");
+      const closeBtn = document.getElementById("mobile-menu-close-btn");
       const lines = document.querySelectorAll(".hamburger-line");
       const navLinks = document.querySelectorAll(".mobile-nav-link");
 
@@ -380,6 +401,15 @@ const tPath = useTranslatedPath(lang);
             });
           }
         });
+
+        // Close menu when clicking the X button
+        if (closeBtn) {
+          closeBtn.addEventListener("click", () => {
+            if (isMenuOpen) {
+              mobileBtn.click();
+            }
+          });
+        }
       }
     </script>
   </body>
