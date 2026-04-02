@@ -259,7 +259,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "the",
     name: structuredClone({ it: "Thè Pesca o Limone", en: "Peach or Lemon Tea", fr: "Thé Pêche ou Citron" }),
-    description: structuredClone({ it: "Lattina 33cl / Bottiglia 33cl", en: "Can 33cl / Bottle 33cl", fr: "Canette 33cl / Bouteille 33cl" }),
+    description: structuredClone({ it: "Lattina 33cl / Bottiglia 40cl", en: "Can 33cl / Bottle 40cl", fr: "Canette 33cl / Bouteille 40cl" }),
     price: "3.00 / 4.00",
     category: "bevande",
     modes: ["lunch", "dinner"],
