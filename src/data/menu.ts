@@ -358,7 +358,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "icnusa",
     name: structuredClone({ it: "Icnusa Non Filtrata", en: "Unfiltered Icnusa", fr: "Icnusa Non Filtrée" }),
-    description: structuredClone({ it: "Birra chiara 55cl", en: "Lager beer 55cl", fr: "Bière blonde 55cl" }),
+    description: structuredClone({ it: "Birra chiara 50cl", en: "Lager beer 50cl", fr: "Bière blonde 50cl" }),
     price: 6,
     category: "birre",
     modes: ["lunch", "dinner"],
@@ -366,7 +366,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "raffo",
     name: "Raffo",
-    description: structuredClone({ it: "Birra chiara 50cl", en: "Lager beer 50cl", fr: "Bière blonde 50cl" }),
+    description: structuredClone({ it: "Birra chiara 45cl", en: "Lager beer 45cl", fr: "Bière blonde 45cl" }),
     price: 6,
     category: "birre",
     modes: ["lunch", "dinner"],
@@ -374,7 +374,7 @@ export const menuItems: MenuItem[] = [
   {
     id: "messina",
     name: "Messina",
-    description: structuredClone({ it: "Birra chiara 55cl", en: "Lager beer 55cl", fr: "Bière blonde 55cl" }),
+    description: structuredClone({ it: "Birra chiara 50cl", en: "Lager beer 50cl", fr: "Bière blonde 50cl" }),
     price: 6,
     category: "birre",
     modes: ["lunch", "dinner"],
