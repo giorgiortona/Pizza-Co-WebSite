@@ -121,3 +121,14 @@ html.lenis body {
 :root:not([data-theme="dinner"]) nav a[data-category-modes]:not([data-category-modes~="lunch"]) {
   display: none !important;
 }
+
+/* Generic visibility toggles for text */
+.theme-dinner-only {
+  display: none !important;
+}
+:root[data-theme="dinner"] .theme-lunch-only {
+  display: none !important;
+}
+:root[data-theme="dinner"] .theme-dinner-only {
+  display: inline !important; /* or block depending on element, inline by default works well for spans */
+}

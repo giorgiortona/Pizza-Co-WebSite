@@ -130,13 +130,18 @@ const pizzaSpecialties = [
           </p>
 
           <h2 class="text-4xl font-serif text-brand-dark leading-tight sm:text-5xl mb-8">
-            {t('home.id.heading')}
+            <span class="theme-lunch-only">{t('home.id.heading')}</span>
+            <span class="theme-dinner-only">{t('home.id.heading.dinner')}</span>
           </h2>
 
           <div class="space-y-6 text-lg leading-relaxed text-brand-dark/80">
-            <p>{typeof site.description === 'string' ? site.description : site.description[lang] || site.description.it}</p>
             <p>
-              {t('home.id.desc1')}
+              <span class="theme-lunch-only">{t('home.id.desc_site.lunch')}</span>
+              <span class="theme-dinner-only">{t('home.id.desc_site.dinner')}</span>
+            </p>
+            <p>
+              <span class="theme-lunch-only">{t('home.id.desc1')}</span>
+              <span class="theme-dinner-only">{t('home.id.desc1.dinner')}</span>
             </p>
           </div>
 
@@ -178,9 +183,12 @@ const pizzaSpecialties = [
           <div>
             <p class="text-brand-dark/80 font-medium mb-2">{t('home.info.contacts')}</p>
             <div class="flex flex-col gap-2">
-              <a href={`tel:${site.phone}`} class="text-lg text-brand-dark hover:text-brand-red transition-colors">
-                {site.phone}
-              </a>
+              <div class="flex flex-col gap-1">
+                <a href={`tel:${site.phone}`} class="text-lg text-brand-dark hover:text-brand-red transition-colors">
+                  {site.phone}
+                </a>
+                <span class="text-xs font-semibold text-brand-red uppercase tracking-wide">{t('contact.no_reservations')}</span>
+              </div>
               <a href={`mailto:${site.email}`} class="text-lg text-brand-dark hover:text-brand-red transition-colors">
                 {site.email}
               </a>
@@ -354,9 +362,10 @@ const pizzaSpecialties = [
           </a>
           <a
             href={`tel:${site.phone}`}
-            class="inline-flex items-center justify-center rounded-full border-2 border-white/50 bg-transparent px-10 py-4 font-semibold text-white transition-all hover:bg-white hover:text-black"
+            class="inline-flex flex-col items-center justify-center rounded-full border-2 border-white/50 bg-transparent px-8 py-3 font-semibold text-white transition-all hover:bg-white hover:text-black group"
           >
-            {t('home.cta.btn_book')}
+            <span>{t('home.cta.btn_book')}</span>
+            <span class="text-[10px] font-normal opacity-70 uppercase tracking-wider mt-1 group-hover:text-brand-red">{t('contact.no_reservations')}</span>
           </a>
         </div>
       </div>

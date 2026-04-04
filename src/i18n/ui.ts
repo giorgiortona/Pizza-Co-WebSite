@@ -16,13 +16,18 @@ export const ui = {
 
     'footer.findus': 'Vieni a trovarci',
     'footer.contacts': 'Contatti',
+    'contact.no_reservations': 'non si effettuano prenotazioni',
     'footer.rights': 'Tutti i diritti riservati.',
 
     'home.hero.welcome': 'Benvenuti da',
 
     'home.id.title': 'Identità',
-    'home.id.heading': 'Il gusto della condivisione: grandi pizze formato famiglia e tranci appena sfornati.',
-    'home.id.desc1': 'Sforniamo ogni giorno pizze servite al trancio garantendo sempre un impasto leggero e fragrante con ingredienti di alta qualità.',
+    'home.id.heading': 'Il sapore della tradizione: pucce salentine, frise croccanti e pizze fritte dorate.',
+    'home.id.heading.dinner': 'Il gusto della condivisione: grandi pizze formato famiglia e tranci appena sfornati.',
+    'home.id.desc_site.lunch': "Street food artigianale, sapori genuini e l'atmosfera calda del Sud.",
+    'home.id.desc_site.dinner': 'Pizza artigianale, ingredienti selezionati e atmosfera di quartiere.',
+    'home.id.desc1': 'Prepariamo ogni giorno le autentiche specialità del Salento e di Napoli. Dalla fragrante puccia farcita alla classica pizza fritta, garantiamo sempre un gusto inconfondibile con ingredienti locali di alta qualità.',
+    'home.id.desc1.dinner': 'Sforniamo ogni giorno pizze servite al trancio garantendo sempre un impasto leggero e fragrante con ingredienti di alta qualità.',
     'home.id.btn_story': 'La Nostra Storia',
     'home.id.btn_menu': 'Vai al Menù',
 
@@ -161,13 +166,18 @@ Puortate sti delizie rint
 
     'footer.findus': 'Visit us',
     'footer.contacts': 'Contacts',
+    'contact.no_reservations': 'No reservations taken',
     'footer.rights': 'All rights reserved.',
 
     'home.hero.welcome': 'Welcome to',
 
     'home.id.title': 'Identity',
-    'home.id.heading': 'The joy of sharing: large family-sized pizzas and freshly baked slices.',
-    'home.id.desc1': 'We bake pizzas served by the slice every day, always guaranteeing a light and fragrant crust with high-quality ingredients.',
+    'home.id.heading': 'The taste of tradition: Salento pucce, crispy frise, and golden fried pizzas.',
+    'home.id.heading.dinner': 'The joy of sharing: large family-sized pizzas and freshly baked slices.',
+    'home.id.desc_site.lunch': 'Artisan street food, authentic flavors, and the warm atmosphere of the South.',
+    'home.id.desc_site.dinner': 'Artisan pizza, selected ingredients and a neighborhood atmosphere.',
+    'home.id.desc1': 'Every day we prepare authentic specialties from Salento and Naples. From fragrant stuffed puccia to classic fried pizza, we always guarantee an unmistakable taste with high-quality local ingredients.',
+    'home.id.desc1.dinner': 'We bake pizzas served by the slice every day, always guaranteeing a light and fragrant crust with high-quality ingredients.',
     'home.id.btn_story': 'Our Story',
     'home.id.btn_menu': 'Go to Menu',
 
@@ -307,13 +317,18 @@ Puortate sti delizie rint
 
     'footer.findus': 'Rendez-nous visite',
     'footer.contacts': 'Contacts',
+    'contact.no_reservations': 'Nous ne prenons pas de réservations',
     'footer.rights': 'Tous droits réservés.',
 
     'home.hero.welcome': 'Bienvenue chez',
 
     'home.id.title': 'Identité',
-    'home.id.heading': 'Le plaisir de partager : de grandes pizzas au format familial et des parts fraîchement cuites.',
-    'home.id.desc1': 'Nous préparons chaque jour des pizzas servies à la part, en garantissant toujours une pâte légère et parfumée avec des ingrédients de haute qualité.',
+    'home.id.heading': 'Le goût de la tradition : pucce du Salento, frise croustillantes et pizzas frites dorées.',
+    'home.id.heading.dinner': 'Le plaisir de partager : de grandes pizzas au format familial et des parts fraîchement cuites.',
+    'home.id.desc_site.lunch': "Une cuisine de rue artisanale, des saveurs authentiques et l'atmosphère chaleureuse du Sud.",
+    'home.id.desc_site.dinner': 'Pizza artisanale, ingrédients sélectionnés et atmosphère de quartier.',
+    'home.id.desc1': "Chaque jour, nous préparons d'authentiques spécialités du Salento et de Naples. De la puccia parfumée et farcie à la pizza frite classique, nous garantissons toujours un goût incomparable avec des ingrédients locaux de haute qualité.",
+    'home.id.desc1.dinner': 'Nous préparons chaque jour des pizzas servies à la part, en garantissant toujours une pâte légère et parfumée avec des ingrédients de haute qualité.',
     'home.id.btn_story': 'Notre Histoire',
     'home.id.btn_menu': 'Voir le Menu',
 
