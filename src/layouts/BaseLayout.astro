@@ -423,5 +423,11 @@ const tPath = useTranslatedPath(lang);
         }
       }
     </script>
+
+    <!-- Vercel Analytics Tracking -->
+    <script>
+      import { inject } from '@vercel/analytics';
+      inject();
+    </script>
   </body>
 </html>
