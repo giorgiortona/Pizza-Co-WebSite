@@ -25,20 +25,26 @@ let googleReviews: {
 } | null = null;
 
 try {
-  const response = await fetch(new URL("/api/google-reviews.json", Astro.url));
-  const data = await response.json();
+  const apiKey = import.meta.env.GOOGLE_MAPS_API_KEY;
+  const placeId = import.meta.env.GOOGLE_PLACE_ID;
 
-  if (data?.result) {
-    googleReviews = {
-      name: data.result.name,
-      rating: data.result.rating,
-      total: data.result.user_ratings_total,
-      url: data.result.url,
-      place_id: data.result.place_id,
-      reviews: Array.isArray(data.result.reviews)
-        ? data.result.reviews.filter((r: any) => r.rating >= 4).slice(0, 4)
-        : [],
-    };
+  if (apiKey && placeId) {
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&reviews_sort=newest&fields=name,rating,user_ratings_total,reviews,url&key=${apiKey}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data?.result) {
+      googleReviews = {
+        name: data.result.name,
+        rating: data.result.rating,
+        total: data.result.user_ratings_total,
+        url: data.result.url,
+        place_id: placeId,
+        reviews: Array.isArray(data.result.reviews)
+          ? data.result.reviews.filter((r: any) => r.rating >= 4).slice(0, 4)
+          : [],
+      };
+    }
   }
 } catch (error) {
   console.error("Errore recensioni Google:", error);

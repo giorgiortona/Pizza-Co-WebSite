@@ -245,10 +245,10 @@ const tPath = useTranslatedPath(lang);
         </div>
 
         <div
-          class="mt-12 pt-8 border-t border-brand-dark/10 text-center text-sm text-brand-dark/50"
+          class="mt-12 pt-8 border-t border-brand-dark/10 flex flex-col items-center justify-center gap-2 text-center text-sm text-brand-dark/50"
         >
-          © {new Date().getFullYear()}
-          {site.name}. {t("footer.rights")}
+          <span>© {new Date().getFullYear()} {site.name}. {t("footer.rights")}</span>
+          <span>Made with ❤️ by Giorgio Ortona</span>
         </div>
       </div>
     </footer>
