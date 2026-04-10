@@ -1,0 +1,70 @@
+{
+  "html_attributions": [],
+  "result": {
+    "name": "Pizza&Co.",
+    "rating": 4.8,
+    "reviews": [
+      {
+        "author_name": "Hannah S.",
+        "author_url": "https://www.google.com/maps/contrib/102441943016227216754/reviews",
+        "language": "en",
+        "original_language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXeKxzUdVAAJahs3NgOFkFdqqLNayhZdKrYjleto5_9BuN8Cpzt=s128-c0x00000000-cc-rp-mo-ba2",
+        "rating": 5,
+        "relative_time_description": "in the last week",
+        "text": "Delicious!!!!! Just landed back from a trip to Lecce and had to write a review for the guys at Pizza & Co. Stumbled across them whilst wandering yesterday evening and wow wow wow. A must visit if you’re in Lecce. I had the slice with potato and it was SO good.",
+        "time": 1775753241,
+        "translated": false
+      },
+      {
+        "author_name": "Calin Tatar",
+        "author_url": "https://www.google.com/maps/contrib/104620181075214157880/reviews",
+        "language": "en",
+        "original_language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJ8MfaV01m2FEPb7m_QW1PI5IVY_Wmim452hGRfYQpy9sx4Wg=s128-c0x00000000-cc-rp-mo",
+        "rating": 5,
+        "relative_time_description": "in the last week",
+        "text": "Perfect pizza, strongly recommended. Grazie mille.",
+        "time": 1775656426,
+        "translated": false
+      },
+      {
+        "author_name": "PASCO STEPHANIE",
+        "author_url": "https://www.google.com/maps/contrib/108799967623994128453/reviews",
+        "language": "en-US",
+        "original_language": "fr",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXU2-hZ-Lra9SilE4yS39v3W674C4nXk0ETVmrie7ct-H2IMBqj=s128-c0x00000000-cc-rp-mo-ba5",
+        "rating": 5,
+        "relative_time_description": "in the last week",
+        "text": "This pizzeria has a truly Italian atmosphere. As fans of authentic Neapolitan pizza, we ordered a whole Margherita for €15 – a real treat! The service was friendly and welcoming despite the many orders, and the wait was perfectly acceptable. I highly recommend giving it a try!",
+        "time": 1775595440,
+        "translated": true
+      },
+      {
+        "author_name": "Edyta Pławiak-Pawłowska",
+        "author_url": "https://www.google.com/maps/contrib/110761703099417657770/reviews",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocK5W7O0mIVSC7SqoP64dK7d9Q1OxsLSXr3dX9MStlkGD4FieA=s128-c0x00000000-cc-rp-mo-ba3",
+        "rating": 4,
+        "relative_time_description": "in the last week",
+        "text": "",
+        "time": 1775499491,
+        "translated": false
+      },
+      {
+        "author_name": "Przemek Zwoaln",
+        "author_url": "https://www.google.com/maps/contrib/102755808733867892129/reviews",
+        "language": "en-US",
+        "original_language": "pl",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocKL7e3MRy7O0_dP017o9q05O-Lh2Hzv_iXdUxa3JkwvMVqtkQ=s128-c0x00000000-cc-rp-mo-ba2",
+        "rating": 5,
+        "relative_time_description": "a week ago",
+        "text": "What a great place! Amazing service, great atmosphere, and delicious pizza ready in minutes!",
+        "time": 1775064004,
+        "translated": true
+      }
+    ],
+    "url": "https://maps.google.com/?cid=7351498261574141147",
+    "user_ratings_total": 1332
+  },
+  "status": "OK"
+}

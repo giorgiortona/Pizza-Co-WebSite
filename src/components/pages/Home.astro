@@ -4,6 +4,7 @@ import HeroSlider from "../HeroSlider.astro";
 import { site } from "../../data/site";
 import HomeSpecialtiesWrapper from "../HomeSpecialtiesWrapper";
 import { getLangFromUrl, useTranslations, useTranslatedPath } from "../../i18n/utils";
+import fallbackReviews from "../../data/googleReviewsFallback.json";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -54,6 +55,21 @@ try {
   }
 } catch (error) {
   console.error("⚠️ ERRORE CONNESSIONE recensioni Google:", error);
+}
+
+// Fallback logic
+if (!googleReviews && fallbackReviews?.result) {
+  console.log("ℹ️ ATTENZIONE: le API di Google sono fallite o mancavano le chiavi API sul server. Verrà utilizzato un set di recensioni salvate in locale (fallback) per garantire che il sito mostri sempre qualcosa online!");
+  googleReviews = {
+    name: fallbackReviews.result.name,
+    rating: fallbackReviews.result.rating,
+    total: fallbackReviews.result.user_ratings_total,
+    url: fallbackReviews.result.url,
+    place_id: "ChIJ4X9oE-BCRBMQ20QHwLj0BWY", // extracted from the real place URL
+    reviews: Array.isArray(fallbackReviews.result.reviews)
+      ? fallbackReviews.result.reviews.filter((r: any) => r.rating >= 4 && r.text?.trim().length > 0).slice(0, 4)
+      : [],
+  };
 }
 
 const heroImages = [
