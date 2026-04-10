@@ -44,10 +44,16 @@ try {
           ? data.result.reviews.filter((r: any) => r.rating >= 4).slice(0, 4)
           : [],
       };
+    } else if (data?.error_message) {
+      console.warn("⚠️ ERRORE API Google Reviews (il widget non verrà mostrato):", data.error_message);
+    } else {
+      console.warn("⚠️ ERRORE API Google Reviews: Nessun risultato trovato per il place_id fornito.");
     }
+  } else {
+    console.warn("⚠️ VARIABILI MANCANTI: GOOGLE_MAPS_API_KEY o GOOGLE_PLACE_ID non trovate nelle impostazioni d'ambiente del server. Le recensioni verranno nascoste.");
   }
 } catch (error) {
-  console.error("Errore recensioni Google:", error);
+  console.error("⚠️ ERRORE CONNESSIONE recensioni Google:", error);
 }
 
 const heroImages = [
