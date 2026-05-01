@@ -57,7 +57,7 @@ export const menuItems: MenuItem[] = [
     price: 6.5,
     category: "pucce",
     modes: ["lunch"],
-    icon: "/icons/veg.jpeg?v=2",
+    icon: "/icons/Vegetarian.svg.png?v=2",
   },
   {
     id: "grecoromana",
@@ -130,6 +130,7 @@ export const menuItems: MenuItem[] = [
     price: 6,
     category: "friseddhra",
     modes: ["lunch"],
+    icon: "/icons/veg.jpeg?v=2",
   },
   {
     id: "salentina",
@@ -154,7 +155,7 @@ export const menuItems: MenuItem[] = [
     price: 10,
     category: "friseddhra",
     modes: ["lunch"],
-    icon: "/icons/veg.jpeg?v=2",
+    icon: "/icons/Vegetarian.svg.png?v=2",
   },
   {
     id: "grica",
@@ -167,7 +168,7 @@ export const menuItems: MenuItem[] = [
     price: 10,
     category: "friseddhra",
     modes: ["lunch"],
-    icon: "/icons/veg.jpeg?v=2",
+    icon: "/icons/Vegetarian.svg.png?v=2",
   },
   {
     id: "uccio",
@@ -192,7 +193,7 @@ export const menuItems: MenuItem[] = [
     price: 6.5,
     category: "pizze fritte",
     modes: ["lunch"],
-    icon: "/icons/veg.jpeg?v=2",
+    icon: "/icons/Vegetarian.svg.png?v=2",
   },
   {
     id: "nennella",
@@ -205,7 +206,7 @@ export const menuItems: MenuItem[] = [
     price: 9,
     category: "pizze fritte",
     modes: ["lunch"],
-    icon: "/icons/veg.jpeg?v=2",
+    icon: "/icons/Vegetarian.svg.png?v=2",
   },
   {
     id: "maradona",
@@ -218,6 +219,7 @@ export const menuItems: MenuItem[] = [
     price: 9.5,
     category: "pizze fritte",
     modes: ["lunch"],
+    icon: "/icons/Vegetarian.svg.png?v=2",
   },
   {
     id: "spaccanapoli",
@@ -487,7 +489,7 @@ export const menuItems: MenuItem[] = [
     price: { trancio: 2.5, intera: 15 },
     category: "pizze",
     modes: ["dinner"],
-    icon: "/icons/veg.jpeg?v=2",
+    icon: "/icons/Vegetarian.svg.png?v=2",
   },
   {
     id: "pizza-bufala",
@@ -500,7 +502,7 @@ export const menuItems: MenuItem[] = [
     price: { trancio: 5, intera: 30 },
     category: "pizze",
     modes: ["dinner"],
-    icon: "/icons/veg.jpeg?v=2",
+    icon: "/icons/Vegetarian.svg.png?v=2",
   },
   {
     id: "pizza-diavola",
@@ -586,5 +588,6 @@ export const menuItems: MenuItem[] = [
     price: { trancio: 4.5, intera: 27 },
     category: "pizze",
     modes: ["dinner"],
+    icon: "/icons/Vegetarian.svg.png?v=2",
   }
 ];
