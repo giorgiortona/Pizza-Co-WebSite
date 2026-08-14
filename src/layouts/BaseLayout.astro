@@ -10,13 +10,13 @@ import {
   useTranslatedPath,
 } from "../i18n/utils";
 
-const { title } = Astro.props;
+const { title, description: pageDescription } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const tPath = useTranslatedPath(lang);
-const description = typeof site.description === "string"
+const description = pageDescription ?? (typeof site.description === "string"
   ? site.description
-  : site.description[lang] || site.description.it;
+  : site.description[lang] || site.description.it);
 const siteUrl = Astro.site ?? new URL("https://pizzaecolecce.it");
 const basePath = Astro.url.pathname.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
 const normalizedPath = basePath === "/" ? "/" : `${basePath.replace(/\/$/, "")}/`;

@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import HeroSlider from "../HeroSlider.astro";
 import { site } from "../../data/site";
+import { getPageSeo } from "../../data/seo";
 import HomeSpecialtiesWrapper from "../HomeSpecialtiesWrapper";
 import { getLangFromUrl, useTranslations, useTranslatedPath } from "../../i18n/utils";
 import fallbackReviews from "../../data/googleReviewsFallback.json";
@@ -9,6 +10,7 @@ import fallbackReviews from "../../data/googleReviewsFallback.json";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const tPath = useTranslatedPath(lang);
+const pageSeo = getPageSeo("home", lang);
 
 let googleReviews: {
   name: string;
@@ -137,11 +139,9 @@ const pizzaSpecialties = [
   },
 ];
 
-const seoTitle = "Pizza & Co - Pizzeria napoletana al trancio, Lecce (Le)";
-
 ---
 
-<BaseLayout title={seoTitle}>
+<BaseLayout title={pageSeo.title} description={pageSeo.description}>
   <!-- Hero Section -->
   <HeroSlider
     images={heroImages}

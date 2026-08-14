@@ -1,13 +1,15 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { site } from "../../data/site";
+import { getPageSeo } from "../../data/seo";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const pageSeo = getPageSeo("contacts", lang);
 ---
 
-<BaseLayout title={t('contatti.hero.title')}>
+<BaseLayout title={pageSeo.title} description={pageSeo.description}>
   <!-- Hero Section -->
   <header class="relative bg-[#12100e] text-white pt-40 pb-32 md:pt-48 md:pb-40 overflow-hidden -mt-24 md:-mt-32">
     <div class="absolute inset-0 z-0">

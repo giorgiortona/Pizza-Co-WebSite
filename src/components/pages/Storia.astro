@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { site } from "../../data/site";
+import { getPageSeo } from "../../data/seo";
 import {
   getLangFromUrl,
   useTranslations,
@@ -10,9 +11,10 @@ import {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const tPath = useTranslatedPath(lang);
+const pageSeo = getPageSeo("story", lang);
 ---
 
-<BaseLayout title={t("storia.hero.title")}>
+<BaseLayout title={pageSeo.title} description={pageSeo.description}>
   <!-- Hero Section -->
   <header
     class="relative bg-[#12100e] text-white pt-40 pb-32 md:pt-48 md:pb-40 overflow-hidden -mt-24 md:-mt-32"
