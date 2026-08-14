@@ -14,6 +14,23 @@ const { title } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const tPath = useTranslatedPath(lang);
+const description = typeof site.description === "string"
+  ? site.description
+  : site.description[lang] || site.description.it;
+const siteUrl = Astro.site ?? new URL("https://pizzaecolecce.it");
+const basePath = Astro.url.pathname.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
+const normalizedPath = basePath === "/" ? "/" : `${basePath.replace(/\/$/, "")}/`;
+const localizedPath = (locale: "it" | "en" | "fr") =>
+  locale === "it"
+    ? normalizedPath
+    : `/${locale}${normalizedPath}`;
+const canonicalUrl = new URL(localizedPath(lang), siteUrl);
+const alternateUrls = {
+  it: new URL(localizedPath("it"), siteUrl),
+  en: new URL(localizedPath("en"), siteUrl),
+  fr: new URL(localizedPath("fr"), siteUrl),
+};
+const ogLocale = { it: "it_IT", en: "en_GB", fr: "fr_FR" }[lang];
 ---
 
 <!DOCTYPE html>
@@ -38,13 +55,31 @@ const tPath = useTranslatedPath(lang);
 
     <meta
       name="description"
-      content={typeof site.description === "string"
-        ? site.description
-        : site.description[lang] || site.description.it}
+      content={description}
     />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content="it_IT" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:card" content="summary" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="google-site-verification" content="i29RZpLgEVOqAcyrQztIvTpWg4Vn8O95T_1gyhys9Vc" />
     <title>{title}</title>
+
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="it-IT" href={alternateUrls.it} />
+    <link rel="alternate" hreflang="en" href={alternateUrls.en} />
+    <link rel="alternate" hreflang="fr" href={alternateUrls.fr} />
+    <link rel="alternate" hreflang="x-default" href={alternateUrls.it} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/logo.png?v=2" />
