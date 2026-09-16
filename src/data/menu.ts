@@ -108,6 +108,18 @@ export const menuItems: MenuItem[] = [
     modes: ["lunch"],
   },
   {
+    id: "rapacauli",
+    name: "Rapacauli",
+    description: structuredClone({
+      it: "Capocollo, Burrata, Cime di rapa",
+      en: "Capocollo, Burrata, Broccoli rabe",
+      fr: "Capocollo, Burrata, Feuilles de navet",
+    }),
+    price: 12,
+    category: "pucce",
+    modes: ["lunch"],
+  },
+  {
     id: "picciusa",
     name: "Picciusa",
     description: structuredClone({
@@ -321,7 +333,7 @@ export const menuItems: MenuItem[] = [
     id: "peroni",
     name: "Peroni",
     description: structuredClone({ it: "Birra chiara 33cl", en: "Lager beer 33cl", fr: "Bière blonde 33cl" }),
-    price: 2.5,
+    price: 3,
     category: "birre",
     modes: ["lunch", "dinner"],
   },
@@ -486,7 +498,7 @@ export const menuItems: MenuItem[] = [
       en: "Tomato, Mozzarella, and Basil.",
       fr: "Tomate, Mozzarella, et Basilic."
     }),
-    price: { trancio: 2.5, intera: 15 },
+    price: { trancio: 3, intera: 18 },
     category: "pizze",
     modes: ["dinner"],
     icon: "/icons/Vegetarian.svg.png?v=2",
